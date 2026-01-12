@@ -1,0 +1,24 @@
+git init: iniciar repositorio //iniciar un repositorio
+git config user.name "TuNombre" //configurar el nombre
+git config user.email "TuEmail" //configurar el email
+git remote add origin https://github.com/usuario/repositorio.git //agregar un repositorio remoto
+git add . //agregar todos los archivos
+git commit -m "TuMensaje" //comitar los archivos
+git push -u origin "nombre de la rama" //subir los archivos
+
+git checkout -B "nombre de la rama" //crear y cambiar a una rama
+git checkout "nombre de la rama" //cambiar a una rama existente
+
+Pasos para subir cambios:
+1. git add .
+2. git commit -m "TuMensaje"
+3. git push -u origin "nombre de la rama"
+
+Pasos para bajar cambios:
+1. git pull origin "nombre de la rama"
+
+Pasos para crear una rama y subirla:
+1. git checkout -B "nombre de la rama"
+2. git add .
+3. git commit -m "TuMensaje"
+4. git push -u origin "nombre de la rama"
