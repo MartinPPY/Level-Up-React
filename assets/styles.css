@@ -41,7 +41,9 @@ a:hover{
 }
 
 /* HOME */
-
+.card-img-top{
+    max-height: 249px;
+}
 /* CARRUSEL */
 .carousel-inner > .carousel-item > img{
     max-height: 249px;
