@@ -21,6 +21,25 @@ li,
     color: #D3D3D3
 }
 
+/* ENLACES */
+a{
+    text-decoration: none;
+}
+a:hover{
+    text-decoration: underline;
+}
+
+/* BOTONES Y ENLACES */
+/* Primario */
+.btn-level-up{
+    background-color: #1E90FF;
+}
+
+/* Secundario */
+.btn-level-up-secondary{
+    background-color: #39FF14;
+}
+
 /* HOME */
 
 /* CARRUSEL */
