@@ -10,7 +10,7 @@ const renderProducts = () => {
                 <div class="card-body">
                     <h5 class="card-title">${productos[i].nombre}</h5>
                     <p class="card-text">
-                        ${productos[i].descripcion}
+                        Categoria: ${productos[i].categoria}
                     </p>
                 </div>
                 <div class="card-footer d-flex justify-content-between align-items-center border-secondary">
