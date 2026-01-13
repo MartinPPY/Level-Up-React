@@ -43,6 +43,7 @@ a:hover {
 /* Secundario */
 .btn-level-up-secondary {
     background-color: #39FF14;
+    color: #000;
 }
 
 .btn-level-up-secondary:hover {

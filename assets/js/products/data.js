@@ -85,3 +85,14 @@ const categorias = [
     { id: 7, nombre: "Poleras Personalizadas" },
     { id: 9, nombre: "Polerones Personalizados" },
 ]
+
+const regiones = [
+    { id: 1, nombre: "Region Metropolitana" },
+
+]
+
+const comunas = [
+    { id: 1, nombre: "Santiago", regionId: 1 },
+    { id: 2, nombre: "Melipilla", regionId: 1 },
+    { id: 3, nombre: "Maipu", regionId: 1 },
+]
