@@ -49,3 +49,5 @@ const getProductDetail = (id) => {
 addEventListener("load", () => {
     renderProducts()
 })
+
+

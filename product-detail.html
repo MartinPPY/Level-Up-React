@@ -59,8 +59,28 @@
     <!-- MAIN -->
     <main class="container-fluid">
 
-        <!-- DETALLE PRODUCTO  PRODUCTO -->
-        detalle
+        <!-- DETALLE PRODUCTO -->
+        <section class="row" id="product-detail">
+            <div class="col-12 col-lg-8 py-5 border">
+
+            </div>
+            <div class="col-12 col-lg-4 py-5 border d-flex flex-column gap-3">
+                <div class="p-2">
+                    <h2 id="product-name"></h2>
+                    <span id="product-price"></span>
+                </div>
+                <div class="border"></div>
+                <p id="product-description"></p>
+                <div class="border"></div>
+                <form action="" class="d-flex flex-column gap-3 justify-content-between">
+                    <fieldset class="d-flex flex-column gap-2 mb-3">
+                        <label for="quantity" class="form-label">Cantidad:</label>
+                        <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control">
+                    </fieldset>
+                    <button type="submit" class="btn btn-level-up-secondary text-dark">Agregar al carrito</button>
+                </form>
+            </div>
+        </section>
 
     </main>
 
@@ -83,7 +103,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/products/data.js"></script>
     <script src="./assets/js/scripts.js"></script>
-    <script src="./assets/js/products.js"></script>
+    <script src="./assets/js/productDetail.js"></script>
 
 </body>
 
