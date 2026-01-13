@@ -1,4 +1,4 @@
-const productos = [
+export const productos = [
     {
         codigo: "JM001",
         categoria: "Juegos de Mesa",

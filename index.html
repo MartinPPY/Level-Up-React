@@ -141,6 +141,31 @@
             <a href="./carrito.html" class="btn btn-level-up-secondary">Ver carrito</a>
         </div>
     </div>
+    <section class="container py-5" id="products">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">Productos destacados</h2>
+        <p>Una selección de nuestros videojuegos más populares</p>
+    </div>
+    <div id="product-list" class="row row-cols-1 row-cols-md-3 g-4"></div>
+</section>
+
+<div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="cart">
+    <div class="offcanvas-header border-bottom border-secondary">
+        <h5 class="offcanvas-title" id="cartLabel">🛒 Mi Carrito</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div id="cart-list"></div>
+        
+        <hr class="border-secondary">
+        <div id="cart-total" class="mb-3"></div>
+        
+        <div class="d-grid gap-2">
+            <button onclick="vaciarCarrito()" class="btn btn-outline-danger btn-sm">Vaciar Carrito</button>
+            <a href="./carrito.html" class="btn btn-level-up-secondary text-dark fw-bold">Finalizar Compra</a>
+        </div>
+    </div>
+</div>
 
 
     <!-- JS -->
