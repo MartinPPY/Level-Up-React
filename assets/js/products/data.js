@@ -5,7 +5,7 @@ const productos = [
         nombre: "Catan",
         precio: 29990,
         descripcion: "Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan. Ideal para 3-4 jugadores y perfecto para noches de juego en familia o con amigos.",
-        image:"./assets/images/products/catan.jpg"
+        image: "./assets/images/products/catan.jpg"
     },
     {
         codigo: "JM002",
@@ -13,7 +13,7 @@ const productos = [
         nombre: "Carcassonne",
         precio: 24990,
         descripcion: "Un juego de colocación de fichas donde los jugadores construyen el paisaje alrededor de la fortaleza medieval de Carcassonne. Ideal para 2-5 jugadores y fácil de aprender.",
-        image:"./assets/images/products/carcassonne.jpg"
+        image: "./assets/images/products/carcassonne.jpg"
     },
     {
         codigo: "AC001",
@@ -21,7 +21,7 @@ const productos = [
         nombre: "Controlador Inalámbrico Xbox Series X",
         precio: 59990,
         descripcion: "Ofrece una experiencia de juego cómoda con botones mapeables y una respuesta táctil mejorada. Compatible con consolas Xbox y PC.",
-        image:"./assets/images/products/control-xbox-series-x.jpg"
+        image: "./assets/images/products/control-xbox-series-x.jpg"
     },
     {
         codigo: "AC002",
@@ -73,3 +73,15 @@ const productos = [
         descripcion: "Una camiseta cómoda y estilizada, con la posibilidad de personalizarla con tu gamer tag o diseño favorito."
     }
 ];
+
+const categorias = [
+    { id: 8, nombre: "Juegos de Mesa" },
+    { id: 1, nombre: "Accesorios" },
+    { id: 2, nombre: "Consolas" },
+    { id: 3, nombre: "Computadores Gamers" },
+    { id: 4, nombre: "Sillas Gamers" },
+    { id: 5, nombre: "Mouse" },
+    { id: 6, nombre: "Mousepad" },
+    { id: 7, nombre: "Poleras Personalizadas" },
+    { id: 9, nombre: "Polerones Personalizados" },
+]

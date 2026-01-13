@@ -26,7 +26,9 @@ const renderProducts = () => {
     }
 }
 
+
+
+//LISTENER PARA CARGAR LAS FUNCIONES EN TODA LA PAGINA
 addEventListener("load", () => {
     renderProducts()
-    document.querySelector("#year").textContent = new Date().getFullYear()
 })
