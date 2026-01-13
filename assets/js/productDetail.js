@@ -7,6 +7,7 @@ const getDetails = () => {
         document.querySelector("#product-name").textContent = product.nombre
         document.querySelector("#product-price").textContent = "$ "+new Intl.NumberFormat('es-CL').format(product.precio)+" CLP"
         document.querySelector("#product-description").textContent = product.descripcion
+        document.querySelector("#product-img").src = product.image
     }
 }
 
