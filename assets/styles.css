@@ -1,7 +1,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
 body {
-    background: linear-gradient(180deg, #39FF14 0%, #1E90FF 100%);
+    min-height: 100vh;
+    background: linear-gradient(180deg,
+            #000000 0%,
+            #0d0f11 30%,
+            var(--bs-dark) 55%,
+            rgba(30, 144, 255, 0.6) 80%,
+            rgba(30, 144, 255, 0.9) 100%);
 }
 
 /* Texto principal */
