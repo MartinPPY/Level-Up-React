@@ -21,7 +21,7 @@
     <!-- HEADER -->
     <header class="bg-dark border-bottom border-secondary sticky-top p-2">
         <nav class="navbar navbar-expand-lg navbar-dark container">
-            <a class="navbar-brand fw-bold fs-4" href="#">🎮 Level Up</a>
+            <a class="navbar-brand fw-bold fs-4" href="./index.html">🎮 Level Up</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                 <span class="navbar-toggler-icon"></span>
@@ -30,13 +30,13 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="./index.html">Inicio</a>
+                        <a class="nav-link active" href="./index.html">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./blogs.html">Noticias</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#">
                             Productos
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" id="categories-menu">
@@ -50,7 +50,11 @@
                 <div class="d-flex gap-3 align-items-center">
                     <a href="./login.html" class="btn btn-sm btn-outline-light">Iniciar sesión</a>
                     <a href="./registro.html" class="btn btn-sm btn-level-up-secondary text-dark fw-bold">Registro</a>
-                    <a data-bs-toggle="offcanvas" href="#cart" role="button"><i class="bi bi-cart fs-5"></i></a>
+                    <a href="#cart" class="position-relative" role="button" data-bs-toggle="offcanvas" id="cart-resumen"
+                        aria-controls="cart" onclick="traerResumen()">
+                        <i class="bi bi-cart fs-5"></i>
+
+                    </a>
                 </div>
             </div>
         </nav>
@@ -66,16 +70,17 @@
             </div>
             <div class="col-12 col-lg-4 py-5 border d-flex flex-column gap-3">
                 <div class="p-2">
+                    <span id="product-code">SKU: </span>
                     <h2 id="product-name"></h2>
                     <span id="product-price"></span>
                 </div>
                 <div class="border"></div>
                 <p id="product-description"></p>
                 <div class="border"></div>
-                <form action="" class="d-flex flex-column gap-3 justify-content-between">
+                <form class="d-flex flex-column gap-3 justify-content-between">
                     <fieldset class="d-flex flex-column gap-2 mb-3">
                         <label for="quantity" class="form-label">Cantidad:</label>
-                        <input type="number" id="quantity" name="quantity" min="1" value="1" class="form-control">
+                        <input type="number" id="quantity" min="1" value="1" class="form-control">
                     </fieldset>
                     <button type="submit" class="btn btn-level-up">Agregar al carrito</button>
                 </form>
