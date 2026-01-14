@@ -53,7 +53,7 @@
                     <a href="#cart" class="position-relative" role="button" data-bs-toggle="offcanvas" id="cart-resumen"
                         aria-controls="cart" onclick="traerResumen()">
 
-                        <i class="bi bi-cart fs-5"></i>                        
+                        <i class="bi bi-cart fs-5"></i>
                     </a>
                 </div>
             </div>
@@ -133,18 +133,21 @@
     </footer>
 
 
-    <!-- OFFCANVAS CART -->
     <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="cart" aria-labelledby="cartLabel">
+
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="cartLabel">Carrito de compras</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
         </div>
+
         <div class="offcanvas-body">
 
-            <a href="./carrito.html" class="btn btn-level-up-secondary">Ver carrito</a>
+            <div id="cart-items"></div>
+
         </div>
     </div>
+
 
 
     <!-- JS -->
@@ -152,7 +155,6 @@
     <script src="./assets/js/products/data.js"></script>
     <script src="./assets/js/products.js"></script>
     <script src="./assets/js/scripts.js"></script>
-    <script src="./assets/js/index.js"></script>
 
 </body>
 

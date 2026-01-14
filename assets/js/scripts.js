@@ -48,7 +48,9 @@ const traerResumen = () => {
                     </div>
                 `).join('')}
             </div>
-            <button class="btn btn-level-up">Ver carrito</button>
+            <a href="./cart.html" class="btn btn-level-up-secondary w-100 mt-3">
+                Ver carrito
+            </a>
         `
     }
 }
