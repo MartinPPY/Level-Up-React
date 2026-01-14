@@ -27,7 +27,7 @@ const renderProducts = () => {
                             <i class="bi bi-eye"></i>
                             Ver detalle
                         </button>
-                        <button class="btn btn-sm btn-level-up text-white">
+                        <button class="btn btn-sm btn-level-up text-white" onclick="addToCart('${productos[i].codigo}')">
                             <i class="bi bi-cart-plus"></i>
                             Añadir al carrito
                         </button>

@@ -20,6 +20,58 @@ const renderCategories = () => {
 //CARRITO
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
+const traerResumen = () => {
+    if (carrito.length < 0) {
+        document.querySelector(".offcanvas-body").innerHTML = `
+            <p>Aun no has agregado productos al carrito</p>
+        `
+    } else {
+        document.querySelector(".offcanvas-body").innerHTML = `
+            <p>Has agregado ${carrito.length} productos al carrito</p>
+            <div class="d-flex flex-column gap-2 mb-3">
+                ${carrito.map(item => `
+                    <div class="card bg-dark text-white border">
+                        <div class="row g-0 align-items-center">
+                            <div class="col-4">
+                                <img src="${item.image}" class="img-fluid rounded-start" alt="${item.nombre}">
+                            </div>
+                            <div class="col-8">
+                                <div class="card-body py-2">
+                                    <h6 class="card-title mb-1">${item.nombre}</h6>
+                                    <p class="card-text mb-0">Cantidad: ${item.cantidad}</p>
+                                    <p class="card-text mb-0">
+                                        $${item.precio.toLocaleString()}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            <button class="btn btn-level-up">Ver carrito</button>
+        `
+    }
+}
+
+const addToCart = (codigo) => {
+    const producto = productos.find(producto => producto.codigo === codigo);
+    const cartItem = carrito.find(item => item.codigo === codigo);
+
+    if (!cartItem) {
+        producto.cantidad = 1;
+        producto.stock--;
+        carrito.push(producto);
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+        traerResumen();
+    } else {
+        cartItem.cantidad ? cartItem.cantidad++ : cartItem.cantidad = 1;
+        producto.stock--;
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+
+        traerResumen();
+    }
+
+}
 
 
 //LISTENER PARA CARGAR LAS FUNCIONES EN TODA LA PAGINA

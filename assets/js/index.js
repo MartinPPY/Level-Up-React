@@ -1,9 +1,7 @@
 // 1. ESTADO DEL CARRITO (Cargar de LocalStorage)
-let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
+
 
 // 2. SELECTORES DE ELEMENTOS
-const productList = document.getElementById('product-list');
-const cartList = document.getElementById('cart-list');
 
 
 // 4. LÓGICA DEL CARRITO (Funciones Globales)
