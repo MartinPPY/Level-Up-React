@@ -50,7 +50,11 @@
                 <div class="d-flex gap-3 align-items-center">
                     <a href="./login.html" class="btn btn-sm btn-outline-light">Iniciar sesión</a>
                     <a href="./registro.html" class="btn btn-sm btn-level-up-secondary text-dark fw-bold">Registro</a>
-                    <a data-bs-toggle="offcanvas" href="#cart" role="button" onclick="traerResumen()"  ><i class="bi bi-cart fs-5"></i></a>
+                    <a href="#cart" class="position-relative" role="button" data-bs-toggle="offcanvas" id="cart-resumen"
+                        aria-controls="cart" onclick="traerResumen()">
+
+                        <i class="bi bi-cart fs-5"></i>                        
+                    </a>
                 </div>
             </div>
         </nav>
@@ -137,10 +141,10 @@
                 aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
-            
+
             <a href="./carrito.html" class="btn btn-level-up-secondary">Ver carrito</a>
         </div>
-    </div>    
+    </div>
 
 
     <!-- JS -->

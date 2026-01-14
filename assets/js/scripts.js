@@ -40,7 +40,7 @@ const traerResumen = () => {
                                     <h6 class="card-title mb-1">${item.nombre}</h6>
                                     <p class="card-text mb-0">Cantidad: ${item.cantidad}</p>
                                     <p class="card-text mb-0">
-                                        $${item.precio.toLocaleString()}
+                                        $${(item.precio * item.cantidad).toLocaleString()}
                                     </p>
                                 </div>
                             </div>
