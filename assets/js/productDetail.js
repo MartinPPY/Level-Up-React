@@ -40,8 +40,8 @@ document.querySelector("form").addEventListener("submit", (e) => {
 
     } else {
 
-        productInCart.cantidad = quantity
-        product.stock -= quantity;
+        productInCart.cantidad += parseInt(quantity)
+        product.stock -= parseInt(quantity)
 
         localStorage.setItem('carrito', JSON.stringify(carrito));
 
