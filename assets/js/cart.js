@@ -7,12 +7,18 @@ function addToCart(codigo) {
         producto.stock--;
         carrito.push(producto);
         localStorage.setItem('carrito', JSON.stringify(carrito));
-        getProductsOfCart()
+        if (window.location.pathname === '/cart.html') {
+            getProductsOfCart()
+        }
+        getCartLength();
     } else {
         cartItem.cantidad ? cartItem.cantidad++ : cartItem.cantidad = 1;
         producto.stock--;
         localStorage.setItem('carrito', JSON.stringify(carrito));
-        getProductsOfCart()
+        if (window.location.pathname === '/cart.html') {
+            getProductsOfCart()
+        }
+        getCartLength();
     }
 }
 
@@ -80,10 +86,27 @@ function getProductsOfCart() {
         `
     }
 
-    document.querySelector("#total").textContent = cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toLocaleString('es-CL') + ' CLP';
-
-
+    if (window.location.pathname === '/cart.html') {
+        document.querySelector("#total").textContent = cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toLocaleString('es-CL') + ' CLP';
+    }
 }
+
+function getCartLength() {
+    console.log('cart length')
+    const cart = JSON.parse(localStorage.getItem('carrito')) || [];
+    if (cart.length > 0) {
+        const cartLength = cart.reduce((acc, item) => acc + item.cantidad, 0);
+        document.querySelector("#cart-resumen").innerHTML = `
+        <i class="bi bi-cart fs-5"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">${cartLength}</span>
+        `;
+    } else {
+        document.querySelector("#cart-resumen").innerHTML += `
+        <i class="bi bi-cart fs-5"></i>
+        `;
+    }
+}
+
 
 addEventListener('DOMContentLoaded', () => {
     getProductsOfCart();

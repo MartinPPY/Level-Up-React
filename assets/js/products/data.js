@@ -113,3 +113,13 @@ const comunas = [
     { id: 2, nombre: "Melipilla", regionId: 1 },
     { id: 3, nombre: "Maipu", regionId: 1 },
 ]
+
+const usuarioAdmin ={
+    email:"admin@gmail.com",
+    password:"12345678"
+}
+
+const usuarioCliente ={
+    email:"cliente@gmail.com",
+    password:"12345678"
+}

@@ -20,8 +20,8 @@ const renderCategories = () => {
 //CARRITO
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
-const traerResumen = () => {
-    if (carrito.length < 0) {
+function traerResumen() {
+    if (carrito.length <= 0) {
         document.querySelector(".offcanvas-body").innerHTML = `
             <p>Aun no has agregado productos al carrito</p>
         `
