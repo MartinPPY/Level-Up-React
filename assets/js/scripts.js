@@ -55,27 +55,6 @@ const traerResumen = () => {
     }
 }
 
-const addToCart = (codigo) => {
-    const producto = productos.find(producto => producto.codigo === codigo);
-    const cartItem = carrito.find(item => item.codigo === codigo);
-
-    if (!cartItem) {
-        producto.cantidad = 1;
-        producto.stock--;
-        carrito.push(producto);
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-        traerResumen();
-    } else {
-        cartItem.cantidad ? cartItem.cantidad++ : cartItem.cantidad = 1;
-        producto.stock--;
-        localStorage.setItem('carrito', JSON.stringify(carrito));
-
-        traerResumen();
-    }
-
-}
-
-
 //LISTENER PARA CARGAR LAS FUNCIONES EN TODA LA PAGINA
 addEventListener("load", () => {
     renderCategories()
