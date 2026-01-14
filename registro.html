@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-3">
                     <li class="nav-item">
-                        <a class="nav-link active" href="./index.html">Inicio</a>
+                        <a class="nav-link" href="./index.html">Inicio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="./blogs.html">Noticias</a>
@@ -65,37 +65,37 @@
                     <h3 class="text-center mb-3">Registra tu Informacion</h3>
                     <div class="mb-3 position-relative">
                         <input type="text" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="RUT Sin puntos ni guion" maxlength="9" minlength="7" required id="run">
+                            placeholder="RUT Sin puntos ni guion" maxlength="9" minlength="7" id="run" required>
+                        <i class="fa-solid fa-id-card icon"></i>
+                    </div>
+                    <div class="mb-3 position-relative">
+                        <input type="text" class="form-control rounded-pill px-4 py-3 placeholder-dark"
+                            placeholder="Nombres (Maximo 100 caracteres)" maxlength="100" id="name" required>
                         <i class="fa-solid fa-user icon"></i>
                     </div>
                     <div class="mb-3 position-relative">
                         <input type="text" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Nombres (Maximo 100 caracteres)" maxlength="100" required id="name">
+                            placeholder="Apellidos (Maximo 100 caracteres)" maxlength="100" id="lastname" required>
                         <i class="fa-solid fa-user icon"></i>
                     </div>
                     <div class="mb-3 position-relative">
-                        <input type="text" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Apellidos (Maximo 100 caracteres)" maxlength="100" required id="lastname">
-                        <i class="fa-solid fa-user icon"></i>
-                    </div>
-                    <div class="mb-3 position-relative">
-                        <input type="date" class="form-control rounded-pill px-4 py-3 placeholder-dark" required id="birthday">
+                        <input type="date" class="form-control rounded-pill px-4 py-3 placeholder-dark" id="birthday" required>
                     </div>
 
                     <div class="mb-3 position-relative">
                         <input type="tel" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Teléfono" required id="phone">
+                            placeholder="Teléfono ej: 912345678" id="phone" maxlength="9" minlength="9" required>
                         <i class="fa-solid fa-phone icon"></i>
 
                     </div>
 
                     <div class="mb-3 position-relative">
                         <input type="email" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Correo Electrónico (Máximo 100 caracteres)" maxlength="100" required>
+                            placeholder="Correo Electrónico (Máximo 100 caracteres)" id="email" maxlength="100" required>
                         <i class="fa-solid fa-envelope icon"></i>
                     </div>
                     <div class="mb-3 position-relative">
-                        
+
                     </div>
                     <div class="mb-3 position-relative">
                         <select name="" class="form-control rounded-pill px-4 py-3 placeholder-dark" id="comunas" required>
@@ -105,18 +105,17 @@
 
                     <div class="mb-3 position-relative">
                         <input type="password" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Contraseña (Mínimo 8 caracteres)" minlength="8" required>
+                            placeholder="Contraseña (Mínimo 8 caracteres)" id="password"  minlength="8" maxlength="10" required>
                         <i class="fa-solid fa-lock icon"></i>
                     </div>
                     <div class="mb-3 position-relative">
                         <input type="password" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Repetir contraseña" minlength="8" required>
+                            placeholder="Repetir contraseña" id="confirm-password"  minlength="8" maxlength="10" required>
                         <i class="fa-solid fa-lock icon"></i>
                     </div>
 
-                    <div class="errores">
+                    <div class="error">
                     </div>
-
 
                     <button type="submit" class="btn btn-primary w-100 rounded-pill py-3">Registrarme</button>
 
@@ -144,8 +143,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./assets/js/products/data.js"></script>
     <script src="./assets/js/scripts.js"></script>
-    <script src="./assets/js/validaciones.js"></script>
-    <script src="./assets/js/registro.js"></script>
+    <script src="./assets/js/validaciones/registro.js"></script>
 
 </body>
 

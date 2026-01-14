@@ -1,11 +1,11 @@
-export const productos = [
+const productos = [
     {
         codigo: "JM001",
         categoria: "Juegos de Mesa",
         nombre: "Catan",
         precio: 29990,
         descripcion: "Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan. Ideal para 3-4 jugadores y perfecto para noches de juego en familia o con amigos.",
-        image: "./assets/images/products/catan.jpg"
+        image: "./assets/images/products/catan.webp"
     },
     {
         codigo: "JM002",

@@ -1,5 +1,3 @@
-import { productos } from "./products/data.js";
-
 // 1. ESTADO DEL CARRITO (Cargar de LocalStorage)
 let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 
@@ -7,35 +5,6 @@ let carrito = JSON.parse(localStorage.getItem('carrito')) || [];
 const productList = document.getElementById('product-list');
 const cartList = document.getElementById('cart-list');
 
-// 3. MOSTRAR PRODUCTOS EN LA TIENDA
-function mostrarProductos() {
-    if (!productList) return;
-    productList.innerHTML = '';
-
-    productos.forEach(producto => {
-        const div = document.createElement('div');
-        div.className = 'col';
-        div.innerHTML = `
-            <div class="card h-100 bg-secondary text-white border-0 shadow">
-                <img src="${producto.image}" class="card-img-top" alt="${producto.nombre}" 
-                     style="height: 200px; object-fit: cover;">
-                <div class="card-body d-flex flex-column">
-                    <h5 class="card-title fw-bold fs-6">${producto.nombre}</h5>
-                    <p class="card-text small text-light opacity-75 flex-grow-1">
-                        ${producto.descripcion.substring(0, 60)}...
-                    </p>
-                    <p class="card-text text-info fs-4 fw-bold mb-3">$${producto.precio.toLocaleString('es-CL')}</p>
-                    <button onclick="agregarAlCarrito('${producto.codigo}')" 
-                            class="btn btn-primary w-100 fw-bold border-0 shadow-sm" 
-                            style="background-color: #6f42c1;">
-                        <i class="bi bi-cart-plus"></i> Añadir
-                    </button>
-                </div>
-            </div>
-        `;
-        productList.appendChild(div);
-    });
-}
 
 // 4. LÓGICA DEL CARRITO (Funciones Globales)
 window.agregarAlCarrito = function(codigo) {
@@ -134,13 +103,3 @@ function renderizarCarrito() {
     `;
     cartList.appendChild(resumenDiv);
 }
-
-// 6. INICIO AL CARGAR LA PÁGINA
-document.addEventListener('DOMContentLoaded', () => {
-    mostrarProductos();
-    renderizarCarrito();
-    
-    // Actualizar el año en el footer si existe el span
-    const yearSpan = document.getElementById('year');
-    if(yearSpan) yearSpan.textContent = new Date().getFullYear();
-});
