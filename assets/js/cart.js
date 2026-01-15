@@ -1,4 +1,11 @@
 function addToCart(codigo) {
+
+    const authenticated = localStorage.getItem("authenticated");
+    if(!authenticated){
+        window.location.href = '/login.html';
+        return;
+    }
+
     const carrito = JSON.parse(localStorage.getItem('carrito')) || [];
     const producto = productos.find(producto => producto.codigo === codigo);
     const cartItem = carrito.find(item => item.codigo === codigo);

@@ -18,6 +18,11 @@ addEventListener("load", () => {
 
 document.querySelector("form").addEventListener("submit", (e) => {
     e.preventDefault()
+    const authenticated = localStorage.getItem("authenticated");
+    if(!authenticated){
+        window.location.href = '/login.html';
+        return;
+    }
     const carrito = localStorage.getItem("carrito") ? JSON.parse(localStorage.getItem("carrito")) : []
     const product = productos.find(p => p.codigo === document.querySelector("#product-code").textContent)
     const quantity = parseInt(document.querySelector("#quantity").value)

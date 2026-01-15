@@ -48,18 +48,20 @@ function isAuthenticated() {
     const authenticated = localStorage.getItem("authenticated")
     if (!authenticated) {
         document.querySelector("#cart-resumen").innerHTML = ""
-    }else{
+    } else {
+        const cart = JSON.parse(localStorage.getItem('carrito')) || [];
         document.querySelector("#auth-options").innerHTML = `
             <button class="btn btn-sm btn-outline-light" onclick="logOut()" >Cerrar sesión</button>
             <a href="#cart" class="position-relative" role="button" data-bs-toggle="offcanvas" id="cart-resumen"
                 aria-controls="cart" onclick="traerResumen()">
                 <i class="bi bi-cart fs-5"></i>
+                ${cart.length > 0 ? `<span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">${cart.reduce((acc, item) => acc + item.cantidad, 0)}</span>` : ""}
             </a>
         `
     }
 }
 
-function logOut(){
+function logOut() {
     localStorage.removeItem("authenticated")
     localStorage.removeItem("isAdmin")
     window.location.href = "login.html"
@@ -79,7 +81,7 @@ if (!admin) {
         password: "12345678"
     }
 
-    localStorage.setItem("admin", JSON.stringify(admin))    
+    localStorage.setItem("admin", JSON.stringify(admin))
 }
 
 //SCRIPT PARA VERIFICAR USUARIO ADMINISTRADOR
