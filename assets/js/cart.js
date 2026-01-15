@@ -130,9 +130,10 @@ function comprar() {
         text: 'Tu compra ha sido realizada con exito',
         showConfirmButton: false,
         timer: 2000
-    })
+    }).then(() => {
 
     localStorage.removeItem('carrito');
     getProductsOfCart()
     window.location.href = '/index.html'
+    })  
 }
