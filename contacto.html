@@ -19,7 +19,7 @@
 
     <header class="bg-dark border-bottom border-secondary sticky-top p-2">
         <nav class="navbar navbar-expand-lg navbar-dark container">
-            <a class="navbar-brand fw-bold fs-4" href="./index.html">🎮 Level Up</a>
+            <a class="navbar-brand fw-bold fs-4" href="./index.html">🎮 Level-Up</a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
                 <span class="navbar-toggler-icon"></span>
@@ -71,18 +71,18 @@
             <div class="col-md-6">
                 <form id="form">
                     <div class="mb-3">
-                        <label class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" required>
+                        <label class="form-label">Nombre y Apellido:</label>
+                        <input type="text" class="form-control" id="name" placeholder="¿Como te llamas?" required>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Correo</label>
-                        <input type="email" class="form-control" id="email" required>
+                        <label class="form-label">Correo:</label>
+                        <input type="email" class="form-control" id="email" placeholder="Validos: @duoc / duocuc y gmail.com">
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Mensaje</label>
-                        <textarea class="form-control" rows="4" id="message" required></textarea>
+                        <label class="form-label">Mensaje:</label>
+                        <textarea class="form-control" rows="4" id="message" placeholder="Cuentanos en que te ayudamos....."></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-level-up">
@@ -119,6 +119,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="assets/js/validaciones/contacto.js"></script>
     <script src="./assets/js/cart.js"></script>
     <script src="./assets/js/scripts.js"></script>

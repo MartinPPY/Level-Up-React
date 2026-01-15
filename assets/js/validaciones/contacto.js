@@ -32,7 +32,16 @@ form.addEventListener("submit", e => {
         </div>
         `
         return
+
     }
+    Swal.fire({
+        icon: "success",
+        title: "Mensaje enviado con exíto",
+        text: "Espere nuestra pronta respuesta",
+        confirmButtonText: "OK"
+    }).then(() => {
+        window.location.href = "contacto.html";
+    });
 
     // Aquí podrías enviar el formulario si todo está correcto
     // form.submit()
