@@ -94,7 +94,7 @@ function getProductsOfCart() {
 
         if (user.email.endsWith("@duoc.cl") || user.email.endsWith("@duocuc.cl")) {
             document.querySelector("#is-duoc").textContent = "Por ser parte de duoc tienes un descuento del 20%";
-            document.querySelector("#total").textContent = cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0).toLocaleString('es-CL') * 0.8 + ' CLP';
+            document.querySelector("#total").textContent = (cart.reduce((acc, item) => acc + item.precio * item.cantidad, 0) * 0.8).toFixed(0).toLocaleString('es-CL') + ' CLP';
         }
     }
 }
