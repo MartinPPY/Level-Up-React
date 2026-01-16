@@ -2,10 +2,13 @@
 const renderProducts = () => {
     let container
 
-    if(window.location.pathname.endsWith("index.html")){
-        container = document.querySelector("#products > .scroll>.row")
-    }else{
+    if (window.location.pathname.endsWith("products.html")) {
+
         container = document.querySelector("#products > .row")
+
+    } else {
+
+        container = document.querySelector("#products > .scroll> .row")
     }
 
     for (let i = 0; i < productos.length; i++) {
@@ -47,7 +50,7 @@ const renderProducts = () => {
 
 
 const getProductDetail = (id) => {
-    window.location.href = "product-detail.html?id="+id
+    window.location.href = "product-detail.html?id=" + id
 }
 
 

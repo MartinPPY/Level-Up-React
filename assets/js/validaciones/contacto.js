@@ -14,14 +14,6 @@ form.addEventListener("submit", e => {
         errores.push("Solo se permiten correos @gmail.com, @duoc.cl o @duocuc.cl")
     }
 
-    if (name.value.trim().length < 10) {
-        errores.push("El nombre debe tener al menos 10 caracteres")
-    }
-
-    if (message.value.trim().length < 10) {
-        errores.push("El mensaje debe tener al menos 10 caracteres")
-    }
-
     if (errores.length > 0) {
         const errorDiv = document.querySelector("#errores")
         errorDiv.innerHTML = `

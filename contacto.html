@@ -72,17 +72,17 @@
                 <form id="form">
                     <div class="mb-3">
                         <label class="form-label">Nombre y Apellido:</label>
-                        <input type="text" class="form-control" id="name" placeholder="¿Como te llamas?" required>
+                        <input type="text" class="form-control" id="name" maxlength="100" placeholder="¿Como te llamas?" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Correo:</label>
-                        <input type="email" class="form-control" id="email" placeholder="Validos: @duoc / duocuc y gmail.com">
+                        <input type="email" class="form-control" id="email" maxlength="100" placeholder="Validos: @duoc / duocuc y gmail.com" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label">Mensaje:</label>
-                        <textarea class="form-control" rows="4" id="message" placeholder="Cuentanos en que te ayudamos....."></textarea>
+                        <textarea class="form-control" rows="4" id="message" placeholder="Cuentanos en que te ayudamos....." maxlength="500"  required></textarea>
                     </div>
 
                     <button type="submit" class="btn btn-level-up">

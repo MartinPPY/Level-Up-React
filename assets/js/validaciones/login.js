@@ -19,16 +19,13 @@ form.addEventListener("submit", e => {
     }
 
     if (errores.length > 0) {
-        Swal.fire({
-            icon: "error",
-            title: "Error en el formulario",
-            html: `
-                <ul style="text-align:left">
-                    ${errores.map(err => `<li>${err}</li>`).join("")}
-                </ul>
-            `,
-            confirmButtonText: "Intentar de nuevo"
-        });
+        document.querySelector("#errores").innerHTML = `
+        <div class="alert alert-danger">
+            <ul>
+                ${errores.map(e => `<li class="text-black text-start">${e}</li>`).join("")}
+            </ul>
+        </div>
+        `
         return;
     }
 
