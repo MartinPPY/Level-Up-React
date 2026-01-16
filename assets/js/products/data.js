@@ -91,35 +91,18 @@ const productos = [
     }
 ];
 
-const categorias = [
-    { id: 8, nombre: "Juegos de Mesa" },
-    { id: 1, nombre: "Accesorios" },
-    { id: 2, nombre: "Consolas" },
-    { id: 3, nombre: "Computadores Gamers" },
-    { id: 4, nombre: "Sillas Gamers" },
-    { id: 5, nombre: "Mouse" },
-    { id: 6, nombre: "Mousepad" },
-    { id: 7, nombre: "Poleras Personalizadas" },
-    { id: 9, nombre: "Polerones Personalizados" },
-]
-
 const regiones = [
     { id: 1, nombre: "Region Metropolitana" },
-
+    {id:2,nombre:"V Región"}
 ]
 
 const comunas = [
     { id: 1, nombre: "Santiago", regionId: 1 },
     { id: 2, nombre: "Melipilla", regionId: 1 },
     { id: 3, nombre: "Maipu", regionId: 1 },
+    { id: 4, nombre: "Valparaiso", regionId: 2 },
+    { id: 5, nombre: "Viña del Mar", regionId: 2 },
+    {id:6,nombre:"San Antonio",regionId:2}
 ]
 
-const usuarioAdmin ={
-    email:"admin@gmail.com",
-    password:"12345678"
-}
 
-const usuarioCliente ={
-    email:"cliente@gmail.com",
-    password:"12345678"
-}

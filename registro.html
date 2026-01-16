@@ -14,7 +14,7 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- CSS PROPIO -->
-     <link rel="shortcut icon" href="./assets/images/icons/icon.png" type="image/x-icon">
+    <link rel="shortcut icon" href="./assets/images/icons/icon.png" type="image/x-icon">
     <link rel="stylesheet" href="./assets/styles.css">
 </head>
 
@@ -74,38 +74,52 @@
                         <i class="fa-solid fa-user icon"></i>
                     </div>
                     <div class="mb-3 position-relative">
-                        <input type="date" class="form-control rounded-pill px-4 py-3 placeholder-dark" id="birthday" required>
+                        <input type="date" class="form-control rounded-pill px-4 py-3 placeholder-dark" id="birthday"
+                            required>
                     </div>
 
                     <div class="mb-3 position-relative">
                         <input type="tel" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Teléfono ej: 912345678" id="phone" maxlength="9" minlength="9" required>
+                            placeholder="Teléfono ej: 912345678 (Opcional)" id="phone" maxlength="9" minlength="9">
                         <i class="fa-solid fa-phone icon"></i>
 
                     </div>
 
                     <div class="mb-3 position-relative">
                         <input type="email" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Correo Electrónico (Máximo 100 caracteres)" id="email" maxlength="100" required>
+                            placeholder="Correo Electrónico (Máximo 100 caracteres)" id="email" maxlength="100"
+                            required>
                         <i class="fa-solid fa-envelope icon"></i>
                     </div>
-                    <div class="mb-3 position-relative">
 
+                    <div class="mb-3">
+                        <select name="" class="form-control rounded-pill px-4 py-3 placeholder-dark" id="regiones" required>
+                            <option value="" class="text-black">Seleccione una region</option>
+                        </select>
                     </div>
-                    <div class="mb-3 position-relative">
-                        <select name="" class="form-control rounded-pill px-4 py-3 placeholder-dark" id="comunas" required>
+                    <div class="mb-3">
+                        <select name="" class="form-control rounded-pill px-4 py-3 placeholder-dark" id="comunas" required disabled>
                             <option value="" class="text-black">Seleccione una comuna</option>
                         </select>
                     </div>
 
                     <div class="mb-3 position-relative">
+                        <input type="text" class="form-control rounded-pill px-4 py-3 placeholder-dark" placeholder="Dirección (Máximo 300 caracteres)"
+                            id="direction" maxlength="300" required>
+                        <i class="fa-solid fa-location-dot icon"></i>
+                    </div>
+
+
+                    <div class="mb-3 position-relative">
                         <input type="password" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Contraseña (Mínimo 8 caracteres)" id="password"  minlength="8" maxlength="10" required>
+                            placeholder="Contraseña (Mínimo 8 caracteres)" id="password" minlength="8" maxlength="10"
+                            required>
                         <i class="fa-solid fa-lock icon"></i>
                     </div>
                     <div class="mb-3 position-relative">
                         <input type="password" class="form-control rounded-pill px-4 py-3 placeholder-dark"
-                            placeholder="Repetir contraseña" id="confirm-password"  minlength="8" maxlength="10" required>
+                            placeholder="Repetir contraseña" id="confirm-password" minlength="8" maxlength="10"
+                            required>
                         <i class="fa-solid fa-lock icon"></i>
                     </div>
 
@@ -131,7 +145,7 @@
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./assets/js/products/data.js"></script>
     <script src="./assets/js/validaciones/registro.js"></script>
 

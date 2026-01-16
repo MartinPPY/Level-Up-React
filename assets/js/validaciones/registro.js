@@ -1,16 +1,39 @@
 
-//LISTENER PARA TRAER COMUNAS
+//LISTENER PARA TRAER REGIONES
 addEventListener("DOMContentLoaded", () => {
-    const selectComunas = document.querySelector("#comunas");
-
-    let options = "";
-
-    comunas.forEach(comuna => {
-        options += `<option value="${comuna.id}" class="text-black">${comuna.nombre}</option>`;
+    const selectRegiones = document.querySelector("#regiones");
+    let regionOptions = "";
+    regiones.forEach(region => {
+        regionOptions += `<option value="${region.id}" class="text-black">${region.nombre}</option>`;
     });
-
-    selectComunas.innerHTML += options;
+    selectRegiones.innerHTML += regionOptions;
 });
+
+document.querySelector("#regiones").addEventListener("change", (e) => {
+
+    e.preventDefault();
+    const selectRegion = document.querySelector("#regiones");
+    const selectComunas = document.querySelector("#comunas");
+    const comunasByRegion = comunas.filter(comuna => comuna.regionId === parseInt(selectRegion.value));
+
+    selectComunas.innerHTML = "";
+
+    if (comunasByRegion.length > 0) {
+
+        selectComunas.disabled = false;
+        let comunasOptions = "";
+        comunasByRegion.forEach(comuna => {
+            comunasOptions += `<option value="${comuna.id}" class="text-black">${comuna.nombre}</option>`;
+        });
+
+        selectComunas.innerHTML += comunasOptions;
+    } else {
+        selectComunas.disabled = true;
+    }
+
+})
+
+
 
 
 // Función para validar el RUT
@@ -67,17 +90,27 @@ document.querySelector("form").addEventListener("submit", (e) => {
     const email = document.querySelector("#email").value;
     const password = document.querySelector("#password").value;
     const confirmPassword = document.querySelector("#confirm-password").value;
+    const direction = document.querySelector("#direction").value;
 
     if (run.trim() === "") errors.push("El RUT es requerido");
     if (!validarRut(run)) errors.push("El RUT es inválido");
     if (name.trim() === "") errors.push("El nombre es requerido");
     if (lastname.trim() === "") errors.push("El apellido es requerido");
 
-    const age = new Date().getFullYear() - new Date(birthday).getFullYear();
-    if (age < 18) errors.push("Debes ser mayor de 18 años");
 
-    if (isNaN(phone)) errors.push("El teléfono debe ser un número");
+    if (birthday) {
+        const age = new Date().getFullYear() - new Date(birthday).getFullYear();
+        if (age < 18) errors.push("Debes ser mayor de 18 años");
+    }
+
+    if (direction.trim() === "") errors.push("La dirección es requerida");
+
+    if(phone){
+        if (isNaN(phone)) errors.push("El teléfono debe ser un número");
+    }
+
     if (!validarEmail(email)) errors.push("El email es inválido");
+
     if (password.trim() === "" || confirmPassword.trim() === "")
         errors.push("La contraseña es requerida");
 
@@ -100,19 +133,15 @@ document.querySelector("form").addEventListener("submit", (e) => {
     localStorage.setItem("user", JSON.stringify(user));
 
     if (window.location.href.endsWith("admin.html")) {
-
         Swal.fire({
             icon: "success",
             title: "Usuario registrado",
             confirmButtonText: "OK"
-        })
-
-        
-
+        }).then(() => {
+            window.location.href = "admin.html";
+        });
         return
     }
-
-
 
     Swal.fire({
         icon: "success",
