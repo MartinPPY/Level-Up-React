@@ -4,11 +4,11 @@ import { Link, NavLink } from "react-router-dom"
 export const Header = () => {
 
     const menuOptions = [
-        { name: "Inicio", path: "/home" },
-        { name: "Noticias", path: "/blogs" },
-        { name: "Productos", path: "/products" },
-        { name: "Nosotros", path: "/nosotros" },
-        { name: "Contacto", path: "/contacto" }
+        { name: "Inicio", path: "/tienda/home" },
+        { name: "Noticias", path: "/tienda/blogs" },
+        { name: "Productos", path: "/tienda/products" },
+        { name: "Nosotros", path: "/tienda/nosotros" },
+        { name: "Contacto", path: "/tienda/contacto" }
     ]
 
 
@@ -16,7 +16,7 @@ export const Header = () => {
     return (
         <header className="bg-dark border-bottom border-secondary sticky-top p-2">
             <nav className="navbar navbar-expand-lg navbar-dark container">
-                <Link to="/" className="navbar-brand fw-bold fs-4">
+                <Link to="/tienda" className="navbar-brand fw-bold fs-4">
                     🎮 Level Up
                 </Link>
 
