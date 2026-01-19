@@ -1,20 +1,9 @@
-import { useState } from "react"
-import { comunas, regiones } from "../../data"
-
-export const UserForm = () => {
-
-    const [regionId, setRegionId] = useState(null)
-
-    const comunasFiltradas = comunas.filter(
-        comuna => comuna.regionId === regionId
-    )
-
-    const onSubmit = (e) => {
-        e.preventDefault()
-        console.log("Formulario enviado")
-    }
-
-    const fields = [
+export const getFields = ({
+    regiones,
+    comunasFiltradas,
+    regionId,
+    setRegionId
+}) => [
         {
             id: "rut",
             label: "Rut (Sin guión ni dígito verificador)",
@@ -53,7 +42,7 @@ export const UserForm = () => {
             id: "birthday",
             label: "Fecha de nacimiento",
             type: "date",
-            required: window.location.pathname.endsWith("/register") ? true : false
+            required: window.location.pathname.endsWith("/register")
         },
         {
             id: "userType",
@@ -94,69 +83,25 @@ export const UserForm = () => {
             label: "Dirección",
             type: "text",
             placeholder: "Ingrese su dirección",
-            required: true,
-            maxLength:300
+            maxLength: 300,
+            required: true
         },
         {
             id: "password",
             label: "Contraseña",
             type: "password",
             placeholder: "Ingrese su contraseña",
-            required: true,
-            maxLength:10,
-            minLength:4
+            minLength: 4,
+            maxLength: 10,
+            required: true
         },
         {
             id: "confirmPassword",
             label: "Confirmar Contraseña",
             type: "password",
             placeholder: "Confirme su contraseña",
-            required: true,
-            maxLength:10,
-            minLength:4
-        },
+            minLength: 4,
+            maxLength: 10,
+            required: true
+        }
     ]
-
-    return (
-        <form onSubmit={onSubmit}>
-            {fields.map(field => (
-                <div className="mb-3" key={field.id}>
-                    <label htmlFor={field.id} className="form-label">
-                        {field.label}
-                    </label>
-
-                    {field.type === "select" ? (
-                        <select
-                            className="form-select"
-                            id={field.id}
-                            required={field.required}
-                            disabled={field.disabled}
-                            onChange={field.onChange}
-                        >
-                            {field.options.map((option, index) => (
-                                <option key={index} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        <input
-                            type={field.type}
-                            className="form-control"
-                            id={field.id}
-                            placeholder={field.placeholder}
-                            minLength={field.minLength}
-                            maxLength={field.maxLength}
-                            pattern={field.pattern}
-                            required={field.required}
-                        />
-                    )}
-                </div>
-            ))}
-
-            <button type="submit" className="btn btn-dark">
-                Registrar Usuario
-            </button>
-        </form>
-    )
-}

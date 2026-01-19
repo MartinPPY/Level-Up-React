@@ -22,3 +22,9 @@ Pasos para crear una rama y subirla:
 2. git add .
 3. git commit -m "TuMensaje"
 4. git push -u origin "nombre de la rama"
+
+
+Pasos para levantar proyecto
+abrir proyecto con vs code o cualquier ide
+ejecutar comando npm install para instalar dependencias
+ejecutar comando npm run dev para levantar el servidor
