@@ -90,7 +90,7 @@ export const getFields = ({
             id: "password",
             label: "Contraseña",
             type: "password",
-            placeholder: "Ingrese su contraseña",
+            placeholder: "Mínimo 4 caracteres",
             minLength: 4,
             maxLength: 10,
             required: true

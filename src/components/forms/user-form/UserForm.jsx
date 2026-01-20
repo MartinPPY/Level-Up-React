@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { comunas, regiones } from "../../../data"
 import { getFields } from "./fields"
 import { validateForm } from "./validaciones"
@@ -9,6 +9,7 @@ export const UserForm = () => {
     const [regionId, setRegionId] = useState(null)
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
+    const formRef = useRef(null)
 
     const comunasFiltradas = comunas.filter(
         comuna => comuna.regionId === regionId
@@ -17,8 +18,10 @@ export const UserForm = () => {
     const onSubmit = (e) => {
         e.preventDefault()
 
+        console.log(formData)
         const validationErrors = validateForm(formData)
-        if (validationErrors) {
+
+        if (Object.keys(validationErrors).length > 0) {
             setErrors(validationErrors)
             console.log(errors)
             Swal.fire({
@@ -28,6 +31,18 @@ export const UserForm = () => {
             })
             return
         }
+
+        Swal.fire({
+            title: "Éxito",
+            text: "Usuario creado correctamente",
+            icon: "success",
+            timer: 3000,
+            showConfirmButton: false
+        }).then(() => {
+            setFormData({})
+            setErrors({})
+            formRef.current.reset()
+        })
 
     }
 
@@ -39,7 +54,7 @@ export const UserForm = () => {
     })
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} ref={formRef}>
             {fields.map(field => (
                 <div className="mb-3" key={field.id}>
                     <label htmlFor={field.id} className="form-label">

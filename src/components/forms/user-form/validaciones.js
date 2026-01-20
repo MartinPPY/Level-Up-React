@@ -29,7 +29,8 @@ const validateRut = (rut) => {
 }
 
 export const validateForm = (formData) => {
-    const errors = {}
+    const  errors = {}
+    console.log(formData.email)
 
     //validar rut
     if (!formData.rut || formData.rut.trim().length < 7) {
@@ -41,20 +42,41 @@ export const validateForm = (formData) => {
     }
 
     // Validar nombre
-    if (!formData.nombre || formData.nombre.trim().length < 2) {
-        errors.nombre = 'El nombre debe tener al menos 2 caracteres'
+    if (!formData.name || formData.name.trim().length < 2) {
+        errors.name = 'El nombre debe tener al menos 2 caracteres'
+    }
+
+    // Validar apellidos
+    if (!formData.lastName || formData.lastName.trim().length < 2) {
+        errors.lastName = 'Los apellidos deben tener al menos 3 caracteres'
     }
 
     // Validar email
-    const emailRegex = /^[a-z0-9._%+-]+@(gmail\.com|duocuc\.cl|duoc\.cl)$/
+    const emailRegex = /^[a-z0-9._%+-]+@(gmail\.com|duocuc\.cl|duoc\.cl)$/i;
+
     if (!formData.email || !emailRegex.test(formData.email)) {
         errors.email = 'Ingrese un email válido'
     }
 
+    //Validar fecha de nacimiento
+    if (formData.birthday) {
+        const birthDate = new Date(formData.birthday);
+        const today = new Date();
+        const age = today.getFullYear() - birthDate.getFullYear();
+        if (age < 18) {
+            errors.birthday = 'Debe ser mayor de 18 años'
+        }
+    }
+
+    //Validar dirección
+    if (formData.direccion.trim().length < 3) {
+        errors.direccion = 'La dirección debe tener al menos 3 caracteres'
+    }
+
     // Validar contraseña
-    if (!formData.password || formData.password.length < 6) {
+    if (!formData.password || formData.password.length < 4) {
         errors.password = 'La contraseña debe tener al menos 6 caracteres'
     }
 
-    return errors
+    return errors ? errors : null
 }
