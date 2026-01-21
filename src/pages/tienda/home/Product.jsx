@@ -2,17 +2,19 @@ import { Eye, ShoppingCart } from "lucide-react"
 import { productos } from "../../../data/data"
 import { useCart } from "../../../context/CartContext"
 import { Link } from "react-router-dom"
+import { useToast } from "../../../context/ToastContext"
 
 
 export const Product = () => {
 
     const { setCart, cart } = useCart()
+    const { showToast } = useToast()
 
     const addToCart = (codigo) => {
 
         const producto = productos.find((p) => p.codigo === codigo)
-        
-        if(!producto) return
+
+        if (!producto) return
 
         setCart(prevCart =>
             prevCart.some(item => item.codigo === codigo)
@@ -24,6 +26,7 @@ export const Product = () => {
                 : [...prevCart, { ...producto, cantidad: 1 }]
         )
 
+        showToast(`Producto ${producto.nombre} añadido al carrito`, 'info')
     }
 
     return (
@@ -58,7 +61,9 @@ export const Product = () => {
                                                 <Eye />
                                                 Ver detalle
                                             </Link>
-                                            <button className="btn btn-sm btn-outline-light d-flex align-items-center gap-2" onClick={() => addToCart(p.codigo)}>
+                                            <button className="btn btn-sm btn-outline-light d-flex align-items-center gap-2" onClick={
+                                                () => addToCart(p.codigo)
+                                            }>
                                                 <ShoppingCart />
                                                 Añadir al carrito
                                             </button>

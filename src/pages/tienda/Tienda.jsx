@@ -4,8 +4,8 @@ import { Registro } from '../tienda/registro/Registro'
 import { Login } from '../tienda/login/Login'
 import { Contacto } from '../tienda/contacto/Contacto'
 import { ProductDetail } from '../tienda/product-detail/ProductDetail'
-import {Header} from '../../components/header/Header'
-import {Footer} from '../../components/footer/Footer'
+import { Header } from '../../components/header/Header'
+import { Footer } from '../../components/footer/Footer'
 import { Nosotros } from "./nosotros/Nosotros"
 import { Blogs } from "./blogs/Blogs"
 import { Cart } from "./cart/Cart"
@@ -29,7 +29,7 @@ export const Tienda = () => {
                         <Route path="/nosotros" element={<Nosotros />} />
                         <Route path="/blogs" element={<Blogs />} />
                         <Route path="/cart" element={<Cart />} />
-                        <Route path="/productos" element={<ProductoView/>} />
+                        <Route path="/productos" element={<ProductoView />} />
                     </Routes>
                     <Footer />
                 </main>

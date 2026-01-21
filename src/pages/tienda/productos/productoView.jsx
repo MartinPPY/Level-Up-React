@@ -3,16 +3,20 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 import { productos } from "../../../data/data";
+import {useToast} from '../../../context/ToastContext'
 
 export const ProductoView = ({ handler }) => {
     //const [products, setProducts] = useState([]);
     //const [selectedProduct, setSelectedProduct] = useState(null); // Para la descripción
 
     const {cart,setCart} = useCart()
+    const {showToast} = useToast()
+    
 
     const addToCart = (codigo) => {
 
         const producto = productos.find((p) => p.codigo === codigo)
+
 
         if (!producto) return
 
@@ -26,6 +30,7 @@ export const ProductoView = ({ handler }) => {
                 : [...prevCart, { ...producto, cantidad: 1 }]
         )
 
+        showToast('Producto agregado al carrito', 'success')
     }
 
 

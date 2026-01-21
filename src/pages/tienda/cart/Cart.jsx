@@ -1,10 +1,12 @@
 import Swal from "sweetalert2"
 import { useCart } from "../../../context/CartContext"
 import { productos } from "../../../data/data"
+import {useToast} from '../../../context/ToastContext'
 
 export const Cart = () => {
 
     const { setCart, cart } = useCart()
+    const { showToast } = useToast()
 
     const addToCart = (codigo) => {
         const producto = productos.find((p) => p.codigo === codigo)
@@ -34,7 +36,9 @@ export const Cart = () => {
     }
 
     const clearCart = () => {
+        
         setCart([])
+        showToast('Carrito vaciado', 'success')
     }
 
     const comprar = () =>{
