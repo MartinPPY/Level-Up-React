@@ -10,7 +10,7 @@ export const Header = () => {
     const menuOptions = [
         { name: "Inicio", path: "/tienda/home" },
         { name: "Noticias", path: "/tienda/blogs" },
-        { name: "Productos", path: "/tienda/products" },
+        { name: "Productos", path: "/tienda/productos" },
         { name: "Nosotros", path: "/tienda/nosotros" },
         { name: "Contacto", path: "/tienda/contacto" }
     ]

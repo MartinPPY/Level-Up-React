@@ -1,35 +1,78 @@
-import { useEffect, useState } from "react";
-import { getProductos } from "../../../Service/productoService";
-import { ProductoCardView } from "./ProductoCardView"; // Asegúrate de crear este archivo o incluirlo aquí
+//import { useEffect, useState } from "react";
+//import { getProductos } from "../../../Service/productoService";
+import { Link } from "react-router-dom";
+import { useCart } from "../../../context/CartContext";
+import { productos } from "../../../data/data";
 
 export const ProductoView = ({ handler }) => {
-    const [products, setProducts] = useState([]);
+    //const [products, setProducts] = useState([]);
+    //const [selectedProduct, setSelectedProduct] = useState(null); // Para la descripción
 
-    useEffect(() => {
-        setProducts(getProductos());
-    }, []);
+    const {cart,setCart} = useCart()
+
+    const addToCart = (codigo) => {
+
+        const producto = productos.find((p) => p.codigo === codigo)
+
+        if (!producto) return
+
+        setCart(prevCart =>
+            prevCart.some(item => item.codigo === codigo)
+                ? prevCart.map(item =>
+                    item.codigo === codigo
+                        ? { ...item, cantidad: item.cantidad + 1 }
+                        : item
+                )
+                : [...prevCart, { ...producto, cantidad: 1 }]
+        )
+
+    }
+
+
 
     return (
-        <div className="row">
-            {products.map(prod => (
-                <div className="col-lg-4 col-md-6 col-12 my-3" key={prod.codigo}>
-                    <div className="card bg-dark text-white border-secondary h-100 shadow">
-                        <div className="card-body d-flex flex-column">
-                            <h5 className="card-title text-info">{prod.name}</h5>
-                            <p className="card-text small text-secondary">{prod.description}</p>
-                            <div className="mt-auto">
-                                <p className="fw-bold fs-4">${prod.price}</p>
-                                <button 
-                                    className="btn btn-primary w-100" 
-                                    onClick={() => handler(prod)}
-                                >
-                                    Agregar al carrito
-                                </button>
+        <div className="container py-4">
+            <div className="row">
+                {productos.map(prod => (
+                    <div className="col-lg-4 col-md-6 col-12 my-3" key={prod.codigo}>
+                        <div className="card bg-dark text-white border-secondary h-100 shadow">
+                            {/* IMAGEN DEL PRODUCTO */}
+                            <img
+                                src={prod.image}
+                                className="card-img-top p-2 rounded"
+                                alt={prod.nombre}
+                                style={{ height: '200px', objectFit: 'contain' }}
+                            />
+                            <div className="card-body d-flex flex-column">
+                                <h5 className="card-title text-info">{prod.nombre}</h5>
+                                <p className="card-text small text-secondary text-truncate">
+                                    {prod.descripcion}
+                                </p>
+                                <div className="mt-auto">
+                                    <p className="fw-bold fs-4">${prod.precio.toLocaleString()}</p>
+
+                                    <div className="d-grid gap-2">
+                                        <button
+                                            className="btn btn-info"
+                                            onClick={() => addToCart(prod.codigo)}
+                                        >
+                                            <i className="bi bi-cart-plus me-2"></i>Agregar al carrito
+                                        </button>
+                                        <Link
+                                            className="btn btn-outline-success btn-sm"
+                                            to={`/tienda/producto-detalle/${prod.codigo}`}
+                                        >
+                                            Ver descripción
+                                        </Link>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
+
+
         </div>
     );
 };
