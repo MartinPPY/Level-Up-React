@@ -6,14 +6,23 @@ import { Link } from "react-router-dom"
 
 export const Product = () => {
 
-    const { setCart,cart } = useCart()
+    const { setCart, cart } = useCart()
 
     const addToCart = (codigo) => {
 
         const producto = productos.find((p) => p.codigo === codigo)
-        const cartItem = cart.find((item) => item.codigo === codigo)
         
-        setCart((prevCart) => [...prevCart, cartItem ? { ...cartItem, cantidad: cartItem.cantidad + 1 } : { ...producto, cantidad: 1 }] )
+        if(!producto) return
+
+        setCart(prevCart =>
+            prevCart.some(item => item.codigo === codigo)
+                ? prevCart.map(item =>
+                    item.codigo === codigo
+                        ? { ...item, cantidad: item.cantidad + 1 }
+                        : item
+                )
+                : [...prevCart, { ...producto, cantidad: 1 }]
+        )
 
     }
 
@@ -46,7 +55,7 @@ export const Product = () => {
                                                 className="btn btn-sm btn-outline-info"
                                                 to={`/tienda/producto-detalle/${p.codigo}`}
                                             >
-                                                <Eye/>
+                                                <Eye />
                                                 Ver detalle
                                             </Link>
                                             <button className="btn btn-sm btn-outline-light d-flex align-items-center gap-2" onClick={() => addToCart(p.codigo)}>

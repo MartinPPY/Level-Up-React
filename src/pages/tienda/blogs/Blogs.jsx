@@ -1,6 +1,7 @@
 import React from 'react'
 import Blog1 from '../../../assets/images/blog1.webp'
 import Blog2 from '../../../assets/images/blog2.webp'
+import { Link } from 'lucide-react'
 
 export const Blogs = () => {
     return (
@@ -28,8 +29,7 @@ export const Blogs = () => {
                                         sobre las condiciones laborales en el sector.
                                     </p>
                                     <a href="https://www.gamedeveloper.com/" target="_blank"
-                                        className="btn btn-sm btn-level-up-primary text-white">Leer más <i
-                                            className="bi bi-box-arrow-up-right"></i></a>
+                                        className="btn btn-sm text-white">Leer más <Link /></a>
                                 </div>
                                 <div className="d-flex flex-column gap-2 col-lg-6">
                                     <img src={Blog1} alt="blog-1" width="100%"/>
@@ -48,8 +48,7 @@ export const Blogs = () => {
                                         tecnología para tareas tradicionalmente humanas.
                                     </p>
                                     <a href="https://www.pcgamer.com/games/third-person-shooter/we-dont-use-ai-to-replace-people-claims-arc-raiders-ceo-without-actually-explaining-what-they-do-use-it-for/"
-                                        target="_blank" className="btn btn-sm btn-level-up-primary text-white">Leer más <i
-                                            className="bi bi-box-arrow-up-right"></i></a>
+                                        target="_blank" className="btn btn-sm btn-level-up-primary text-white">Leer más <Link />  </a>
                                 </div>
                                 <div className="d-flex flex-column gap-2 col-lg-6">
                                     <img src={Blog2} alt="blog-1" width="100%"/>
