@@ -4,8 +4,9 @@ import { Registro } from '../tienda/registro/Registro'
 import { Login } from '../tienda/login/Login'
 import { Contacto } from '../tienda/contacto/Contacto'
 import { ProductDetail } from '../tienda/product-detail/ProductDetail'
-import {Header} from '../../components/header/Header'
-import {Footer} from '../../components/footer/Footer'
+import { Header } from '../../components/header/Header'
+import { Footer } from '../../components/footer/Footer'
+import { Cart } from '../tienda/cart/Cart'
 
 
 export const Tienda = () => {
@@ -21,6 +22,8 @@ export const Tienda = () => {
                         <Route path="/login" element={<Login />} />
                         <Route path="/contacto" element={<Contacto />} />
                         <Route path="/producto-detalle/:codigo" element={<ProductDetail />} />
+
+                        
                     </Routes>
                     <Footer />
                 </main>
