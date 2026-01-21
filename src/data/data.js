@@ -105,7 +105,7 @@ export const productos = [
 
 export const regiones = [
     { id: 1, nombre: "Region Metropolitana" },
-    {id:2,nombre:"V Región"}
+    { id: 2, nombre: "V Región" }
 ]
 
 export const comunas = [
@@ -114,7 +114,18 @@ export const comunas = [
     { id: 3, nombre: "Maipu", regionId: 1 },
     { id: 4, nombre: "Valparaiso", regionId: 2 },
     { id: 5, nombre: "Viña del Mar", regionId: 2 },
-    {id:6,nombre:"San Antonio",regionId:2}
+    { id: 6, nombre: "San Antonio", regionId: 2 }
 ]
 
+export const categorias = [
+    "Todas",
+    "Juegos de Mesa",
+    "Accesorios",
+    "Consolas",
+    "Computadores Gamers",
+    "Sillas Gamers",
+    "Mouse",
+    "Mousepad",
+    "Poleras Personalizadas"
+];
 

@@ -26,18 +26,15 @@ export const Login = () => {
             return;
         }
 
-        Swal.fire({
-            title: "Éxito",
-            text: "Inicio de sesión exitoso",
-            icon: "success",
-            timer: 3000,
-            showConfirmButton: false
-        }).then(() => {
+        if(email === "admin@gmail.com" && password === "admin") {
             setEmail("")
             setPassword("")
             setErrors({})
+            navigate("/admin")
+        } else {
             navigate("/tienda")
-        })
+        }
+
 
     }
 
@@ -72,6 +69,12 @@ export const Login = () => {
                                 </div>
                             )
                         }
+
+                        <div className="bg-warning p-2 mb-3 rounded">
+                            <h4 className="text-dark">⚠️ Datos de prueba</h4>
+                            <p className="text-dark">Usuario: <strong>admin@gmail.com</strong></p>
+                            <p className="text-dark">Contraseña: <strong>admin</strong></p>
+                        </div>
 
                         <button type="submit" className="btn btn-info w-100">Iniciar sesión</button>
                     </form>

@@ -14,14 +14,20 @@ export const ProductDetail = () => {
 
     const addToCart = (e) => {
         e.preventDefault()
-        const item = cart.find((p) => p.codigo === producto.codigo)
+        const producto = productos.find((p) => p.codigo === codigo)
 
-        if (item) {
-            setCart((prevCart) => prevCart.map((p) => p.codigo === producto.codigo ? { ...p, quantity: p.quantity + quantity } : p))
-            
-        } else {
-            setCart((prevCart) => [...prevCart, { ...producto, quantity }])
-        }
+
+        if (!producto) return
+
+        setCart(prevCart =>
+            prevCart.some(item => item.codigo === codigo)
+                ? prevCart.map(item =>
+                    item.codigo === codigo
+                        ? { ...item, cantidad: parseInt(item.cantidad) + parseInt(quantity) }
+                        : item
+                )
+                : [...prevCart, { ...producto, cantidad: quantity }]
+        )
     }
 
     return (

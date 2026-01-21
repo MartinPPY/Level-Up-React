@@ -48,7 +48,7 @@ export const Cart = () => {
             icon: 'success',
             confirmButtonText: 'Aceptar'
         })
-        clearCart()
+        setCart([])
     }
 
     return (
@@ -84,6 +84,14 @@ export const Cart = () => {
 
                 </div>
                 <div className="col-lg-4 p-5 d-flex flex-column gap-5 border-start border-top text-white">
+                    <div className="d-flex justify-content-around">
+                        <h5>Subtotal:</h5>  
+                        <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad), 0).toLocaleString('es-CL')} CLP</h5>
+                    </div>
+                    <div className="d-flex justify-content-around">
+                        <h5>Descuento:</h5>  
+                        <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.2), 0).toLocaleString('es-CL')} CLP</h5>
+                    </div>
                     <div className="d-flex justify-content-around">
                         <h3>Total:</h3>
                         <h3>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.8), 0).toLocaleString('es-CL')} CLP</h3>
