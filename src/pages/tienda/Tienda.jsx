@@ -8,6 +8,7 @@ import {Header} from '../../components/header/Header'
 import {Footer} from '../../components/footer/Footer'
 import { Nosotros } from "./nosotros/Nosotros"
 import { Blogs } from "./blogs/Blogs"
+import { Cart } from "./cart/Cart"
 
 
 
@@ -26,6 +27,7 @@ export const Tienda = () => {
                         <Route path="/producto-detalle/:codigo" element={<ProductDetail />} />
                         <Route path="/nosotros" element={<Nosotros />} />
                         <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/cart" element={<Cart />} />
                     </Routes>
                     <Footer />
                 </main>
