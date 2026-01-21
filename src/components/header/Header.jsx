@@ -1,7 +1,11 @@
 import { ShoppingCart } from "lucide-react"
 import { Link, NavLink } from "react-router-dom"
+import { useCart } from "../../context/CartContext"
+
 
 export const Header = () => {
+
+    const { cart } = useCart()
 
     const menuOptions = [
         { name: "Inicio", path: "/tienda/home" },
@@ -35,14 +39,16 @@ export const Header = () => {
                         ))}
                     </ul>
 
-                    <div className="d-flex gap-3 align-items-center" id="auth-options">
+                    <div className="d-flex gap-3 align-items-center">
                         <Link to="/tienda/login" className="tienda btn btn-sm btn-outline-info">Iniciar sesión</Link>
                         <Link to="/tienda/registro" className="tienda btn btn-sm btn-outline-success">Registrarse</Link>
-                        <button className="position-relative text-white btn" role="button" data-bs-toggle="offcanvas" id="cart-resumen"
-
-                            aria-controls="cart" onClick={() => { }}>
+                        <Link className="position-relative text-white" to="/tienda/cart" 
+                            aria-controls="cart">
                             <ShoppingCart />
-                        </button>
+                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {cart.length}
+                            </span>
+                        </Link>
                     </div>
                 </div>
             </nav>

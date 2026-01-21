@@ -1,8 +1,18 @@
-import { ShoppingCart } from "lucide-react"
+import { Eye, ShoppingCart } from "lucide-react"
 import { productos } from "../../../data"
+import { useCart } from "../../../context/CartContext"
 
 
 export const Product = () => {
+
+    const { setCart } = useCart()
+
+    const addToCart = (codigo) => {
+
+        const producto = productos.find((p) => p.codigo === codigo)
+        setCart((prevCart) => [...prevCart, producto])
+
+    }
 
     return (
         <section className="container py-5">
@@ -11,7 +21,7 @@ export const Product = () => {
                 <p>Una selección de nuestros productos más populares</p>
             </div>
 
-            <div className="scroll" style={{overflowX: 'hidden',height:'700px',scrollbarWidth:'thin'}}>
+            <div className="scroll" style={{ overflowX: 'hidden', height: '700px', scrollbarWidth: 'thin' }}>
                 <div className="row row-cols-1 row-cols-md-3 g-4">
                     {
                         productos.map((p) => (
@@ -32,11 +42,11 @@ export const Product = () => {
                                             <button
                                                 className="btn btn-sm btn-outline-info"
                                             >
-                                                <i className="bi bi-eye"></i>
+                                                <Eye/>
                                                 Ver detalle
                                             </button>
-                                            <button className="btn btn-sm btn-outline-light d-flex align-items-center gap-2">
-                                                <ShoppingCart/>
+                                            <button className="btn btn-sm btn-outline-light d-flex align-items-center gap-2" onClick={() => addToCart(p.codigo)}>
+                                                <ShoppingCart />
                                                 Añadir al carrito
                                             </button>
                                         </div>
