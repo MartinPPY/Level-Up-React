@@ -2,12 +2,13 @@ import { useParams } from "react-router-dom"
 import { productos } from "../../../data/data"
 import { useCart } from "../../../context/CartContext"
 import { useState } from "react"
-
+import { useToast } from '../../../context/ToastContext'
 
 export const ProductDetail = () => {
 
     const { codigo } = useParams()
     const { setCart, cart } = useCart()
+    const { showToast } = useToast()
     const [quantity, setQuantity] = useState(1)
 
     const producto = productos.find((p) => p.codigo === codigo)
@@ -28,6 +29,9 @@ export const ProductDetail = () => {
                 )
                 : [...prevCart, { ...producto, cantidad: quantity }]
         )
+
+        showToast("Producto agregado al carrito", "success")
+
     }
 
     return (

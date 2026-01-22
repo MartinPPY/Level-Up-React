@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { comunas,regiones } from "../../../data/data"
+import { comunas, regiones } from "../../../data/data"
 import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
 import { getFields } from "./fields"
@@ -53,41 +53,46 @@ export const TiendaUserForm = () => {
 
     return (
         <form onSubmit={onSubmit} ref={formRef} className="d-flex flex-column">
-            {fields.map(field => (
-                <div className="mb-3" key={field.id}>
-                    <label htmlFor={field.id} className="form-label">
-                        {field.label}
-                    </label>
+            {fields
+                .filter(field => field.id !== "userType")
+                .map(field => (
+                    <div className="mb-3" key={field.id}>
+                        <label htmlFor={field.id} className="form-label">
+                            {field.label}
+                        </label>
 
-                    {field.type === "select" ? (
-                        <select
-                            className="form-select bg-dark text-white border-info tienda-registro-placeholder"
-                            id={field.id}
-                            required={field.required}
-                            disabled={field.disabled}
-                            onChange={field.onChange}
-                        >
-                            {field.options.map((option, index) => (
-                                <option key={index} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
-                    ) : (
-                        <input
-                            type={field.type}
-                            className="form-control bg-dark text-white border-info tienda-registro-placeholder"
-                            id={field.id}
-                            placeholder={field.placeholder}
-                            minLength={field.minLength}
-                            maxLength={field.maxLength}
-                            pattern={field.pattern}
-                            required={field.required}
-                            onInput={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
-                        />
-                    )}
-                </div>
-            ))}
+                        {field.type === "select" ? (
+                            <select
+                                className="form-select bg-dark text-white border-info tienda-registro-placeholder"
+                                id={field.id}
+                                required={field.required}
+                                disabled={field.disabled}
+                                onChange={field.onChange}
+                            >
+                                {field.options.map((option, index) => (
+                                    <option key={index} value={option.value}>
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
+                        ) : (
+                            <input
+                                type={field.type}
+                                className="form-control bg-dark text-white border-info tienda-registro-placeholder"
+                                id={field.id}
+                                placeholder={field.placeholder}
+                                minLength={field.minLength}
+                                maxLength={field.maxLength}
+                                pattern={field.pattern}
+                                required={field.required}
+                                onInput={(e) =>
+                                    setFormData({ ...formData, [field.id]: e.target.value })
+                                }
+                            />
+                        )}
+                    </div>
+                ))}
+
 
             {
                 errors && Object.keys(errors).length > 0 && (
