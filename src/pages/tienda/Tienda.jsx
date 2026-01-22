@@ -10,6 +10,7 @@ import { Nosotros } from "./nosotros/Nosotros"
 import { Blogs } from "./blogs/Blogs"
 import { Cart } from "./cart/Cart"
 import { ProductoView } from "./productos/productoView"
+import { NotFound } from "../../components/not-found/NotFound"
 
 
 
@@ -19,18 +20,19 @@ export const Tienda = () => {
             <div className="d-flex flex-column min-vh-100 bg-dark   ">
                 <main className="flex-grow-1">
                     <Header />
-                    <Routes>
-                        <Route index element={<Navigate to="home" />} />
-                        <Route path="/home" element={<Home />} />
-                        <Route path="/registro" element={<Registro />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/contacto" element={<Contacto />} />
-                        <Route path="/producto-detalle/:codigo" element={<ProductDetail />} />
-                        <Route path="/nosotros" element={<Nosotros />} />
-                        <Route path="/blogs" element={<Blogs />} />
-                        <Route path="/cart" element={<Cart />} />
-                        <Route path="/productos" element={<ProductoView />} />
-                    </Routes>
+                        <Routes>
+                            <Route index element={<Navigate to="home" />} />
+                            <Route path="/home" element={<Home />} />
+                            <Route path="/registro" element={<Registro />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/contacto" element={<Contacto />} />
+                            <Route path="/producto-detalle/:codigo" element={<ProductDetail />} />
+                            <Route path="/nosotros" element={<Nosotros />} />
+                            <Route path="/blogs" element={<Blogs />} />
+                            <Route path="/cart" element={<Cart />} />
+                            <Route path="/productos" element={<ProductoView />} />
+                            <Route path="*" element={<NotFound />} />
+                        </Routes>
                     <Footer />
                 </main>
             </div>

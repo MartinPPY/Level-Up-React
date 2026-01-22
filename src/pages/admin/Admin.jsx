@@ -5,6 +5,7 @@ import { Footer } from "../../components/footer/Footer"
 import { Users } from "./users/Users"
 import { Products } from "./products/Products"
 import { Ventas } from "./dashboard/Ventas"
+import { NotFound } from "../../components/not-found/NotFound"
 
 export const Admin = () => {
     return (
@@ -18,6 +19,7 @@ export const Admin = () => {
                         <Route path="users" element={<Users />} />
                         <Route path="products" element={<Products />} />
                         <Route path="sales" element={<Ventas />} />
+                        <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
                 <Footer />
