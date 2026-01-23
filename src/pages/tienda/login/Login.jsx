@@ -3,6 +3,7 @@ import { useState } from "react";
 import { validateForm } from "./validaciones";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../../services/auth.service";
 
 export const Login = () => {
 
@@ -11,7 +12,7 @@ export const Login = () => {
     const [errors, setErrors] = useState({});
     const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const errors = validateForm(email, password);
@@ -26,13 +27,11 @@ export const Login = () => {
             return;
         }
 
-        if(email === "admin@gmail.com" && password === "admin") {
-            setEmail("")
-            setPassword("")
-            setErrors({})
-            navigate("/admin")
-        } else {
-            navigate("/tienda")
+        try {
+            const data  = await login(email,password)            
+            localStorage.setItem("token",data.token)
+        } catch (error) {
+            console.error(error)
         }
 
 
