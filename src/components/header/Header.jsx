@@ -1,11 +1,16 @@
 import { ShoppingCart } from "lucide-react"
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useCart } from "../../context/CartContext"
+import { useAuth } from "../../context/AuthContext"
 
 
 export const Header = () => {
 
     const { cart } = useCart()
+    const { authenticated, setAuthenticated } = useAuth()
+    const navigate = useNavigate()
+
+
 
     const menuOptions = [
         { name: "Inicio", path: "/tienda/home" },
@@ -14,6 +19,12 @@ export const Header = () => {
         { name: "Nosotros", path: "/tienda/nosotros" },
         { name: "Contacto", path: "/tienda/contacto" }
     ]
+
+    const logOut = () => {
+        localStorage.removeItem("token")
+        setAuthenticated(false)
+        navigate("/tienda")
+    }
 
 
 
@@ -40,9 +51,17 @@ export const Header = () => {
                     </ul>
 
                     <div className="d-flex gap-3 align-items-center">
-                        <Link to="/tienda/login" className="tienda btn btn-sm btn-outline-info">Iniciar sesión</Link>
-                        <Link to="/tienda/registro" className="tienda btn btn-sm btn-outline-success">Registrarse</Link>
-                        <Link className="position-relative text-white" to="/tienda/cart" 
+                        {
+                            authenticated ? (
+                                <button className="tienda btn btn-sm btn-outline-danger" onClick={logOut}>Cerrar sesión</button>
+                            ) : (
+                                <>
+                                    <Link to="/tienda/login" className="tienda btn btn-sm btn-outline-info">Iniciar sesión</Link>
+                                    <Link to="/tienda/registro" className="tienda btn btn-sm btn-outline-success">Registrarse</Link>
+                                </>
+                            )
+                        }
+                        <Link className="position-relative text-white" to="/tienda/cart"
                             aria-controls="cart">
                             <ShoppingCart />
                             <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
@@ -52,6 +71,6 @@ export const Header = () => {
                     </div>
                 </div>
             </nav>
-        </header>
+        </header >
     )
 }

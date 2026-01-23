@@ -4,17 +4,21 @@ import { validateForm } from "./validaciones";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../services/auth.service";
+import { useAuth } from "../../../context/AuthContext";
 
 export const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [errors, setErrors] = useState({});
-    const navigate = useNavigate();
+    const [loading,setLoading] = useState(false)
+    const {setAuthenticated} = useAuth()
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setLoading(true)
         const errors = validateForm(email, password);
 
         if (Object.keys(errors).length > 0) {
@@ -30,8 +34,12 @@ export const Login = () => {
         try {
             const data  = await login(email,password)            
             localStorage.setItem("token",data.token)
+            setAuthenticated(true)
+            navigate("/tienda")
         } catch (error) {
             console.error(error)
+        } finally {
+            setLoading(false)
         }
 
 
@@ -75,7 +83,7 @@ export const Login = () => {
                             <p className="text-dark">Contraseña: <strong>admin</strong></p>
                         </div>
 
-                        <button type="submit" className="btn btn-info w-100">Iniciar sesión</button>
+                        <button type="submit" className="btn btn-info w-100" disabled={loading}>{loading ? "Cargando..." : "Iniciar sesión"}</button>
                     </form>
                 </div>
             </div>
