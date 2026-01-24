@@ -1,16 +1,24 @@
 import { Eye, ShoppingCart } from "lucide-react"
 import { productos } from "../../../data/data"
 import { useCart } from "../../../context/CartContext"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "../../../context/ToastContext"
+import { useAuth } from "../../../context/AuthContext"
 
 
 export const Product = () => {
 
     const { setCart, cart } = useCart()
     const { showToast } = useToast()
+    const { authenticated } = useAuth()
+    const navigate = useNavigate()
 
     const addToCart = (codigo) => {
+
+        if(!authenticated){
+            navigate("/tienda/login")
+            return
+        }
 
         const producto = productos.find((p) => p.codigo === codigo)
 

@@ -1,18 +1,25 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate,  } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
 import { productos,categorias } from "../../../data/data";
 import { useToast } from "../../../context/ToastContext";
 import { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
 
 export const ProductoView = () => {
     const { cart, setCart } = useCart();
     const { showToast } = useToast();
+    const {authenticated} = useAuth()
+    const navigate = useNavigate()
 
     const [busqueda, setBusqueda] = useState("");
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
 
 
     const addToCart = (codigo) => {
+        if(!authenticated){
+            navigate("/tienda/login")
+            return
+        }
         const producto = productos.find(p => p.codigo === codigo);
         if (!producto) return;
 

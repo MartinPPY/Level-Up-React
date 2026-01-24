@@ -3,12 +3,17 @@ import { productos } from "../../../data/data"
 import { useCart } from "../../../context/CartContext"
 import { useState } from "react"
 import { useToast } from '../../../context/ToastContext'
+import { useAuth } from "../../../context/AuthContext"
+import { useNavigate } from "react-router-dom"
 
 export const ProductDetail = () => {
 
     const { codigo } = useParams()
     const { setCart, cart } = useCart()
     const { showToast } = useToast()
+    const {authenticated} = useAuth()
+    const navigate = useNavigate()
+    
     const [quantity, setQuantity] = useState(1)
 
     const producto = productos.find((p) => p.codigo === codigo)
@@ -19,6 +24,11 @@ export const ProductDetail = () => {
 
 
         if (!producto) return
+
+        if(!authenticated){
+            navigate("/tienda/login")
+            return
+        }
 
         setCart(prevCart =>
             prevCart.some(item => item.codigo === codigo)

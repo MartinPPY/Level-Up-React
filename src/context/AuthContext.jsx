@@ -1,4 +1,5 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { isAuthenticated } from "../services/auth.service";
 
 
 export const AuthContext = createContext({})
@@ -12,7 +13,20 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({ children }) => {
-    const [authenticated, setAuthenticated] = useState(false)    
+    const [authenticated, setAuthenticated] = useState(false)
+
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await isAuthenticated()
+                setAuthenticated(() => response ? true : false)
+            } catch (error) {
+                setAuthenticated(false)
+            }
+
+        }
+        checkAuth()
+    }, [])
 
     return (
         <AuthContext.Provider value={{ authenticated, setAuthenticated }}>
