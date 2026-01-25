@@ -1,22 +1,46 @@
-import { useRef, useState } from "react"
-import { comunas, regiones } from "../../../data/data"
+import { useEffect, useRef, useState } from "react"
 import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
 import { getFields } from "./fields"
+import { getLocations } from "../../../services/location.service"
+import { registerUser } from "../../../services/auth.service"
+import { useNavigate } from "react-router-dom"
 
 export const TiendaUserForm = () => {
 
     const [regionId, setRegionId] = useState(null)
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
-    const formRef = useRef(null)
+    const [locations, setLocations] = useState({ comunas: [], regions: [] })
+    const [loading, setLoading] = useState(false)
 
-    const comunasFiltradas = comunas.filter(
-        comuna => comuna.regionId === regionId
+    const formRef = useRef(null)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const getLocationsData = async () => {
+            const { comunas, regions } = await getLocations()
+            setLocations({ comunas, regions })
+
+        }
+        getLocationsData()
+
+    }, [])
+
+    const comunasFiltradas = locations.comunas?.filter(
+        comuna => comuna.region.id === regionId
     )
 
-    const onSubmit = (e) => {
+    const fields = getFields({
+        regiones: locations.regions,
+        comunasFiltradas,
+        regionId,
+        setRegionId
+    })
+
+    const onSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
         const validationErrors = validateForm(formData)
 
         if (Object.keys(validationErrors).length > 0) {
@@ -27,7 +51,39 @@ export const TiendaUserForm = () => {
                 text: "Por favor, complete todos los campos correctamente",
                 icon: "error"
             })
+            setLoading(false)
             return
+        }
+
+        console.log(formData)
+
+        try {
+
+            const response = await registerUser({
+                run: formData.run,
+                name: formData.name,
+                lastname: formData.lastName,
+                email: formData.email,
+                birthday: formData.birthday,
+                password: formData.password,
+                addres: formData.addres,
+                comunaId: parseInt(formData.comuna)
+            })
+            console.log(response)
+
+
+        } catch (error) {
+            console.error(error)
+             Swal.fire({
+                title: "Error",
+                text: error.response?.data?.message || "Error al crear el usuario",
+                icon: "error"
+            })
+            setLoading(false)
+
+
+        } finally {
+            setLoading(false)
         }
 
         Swal.fire({
@@ -40,16 +96,10 @@ export const TiendaUserForm = () => {
             setFormData({})
             setErrors({})
             formRef.current.reset()
+            navigate("/tienda/login")
         })
 
     }
-
-    const fields = getFields({
-        regiones,
-        comunasFiltradas,
-        regionId,
-        setRegionId
-    })
 
     return (
         <form onSubmit={onSubmit} ref={formRef} className="d-flex flex-column">
@@ -63,14 +113,23 @@ export const TiendaUserForm = () => {
 
                         {field.type === "select" ? (
                             <select
-                                className="form-select bg-dark text-white border-info tienda-registro-placeholder"
                                 id={field.id}
+                                className="form-select bg-dark text-white border-info tienda-registro-placeholder"
                                 required={field.required}
                                 disabled={field.disabled}
-                                onChange={field.onChange}
+                                value={formData[field.id] || ""}
+                                onChange={(e) => {
+                                    // actualizar formData
+                                    setFormData({ ...formData, [field.id]: e.target.value })
+
+                                    // Si es región, actualizar regionId también
+                                    if (field.id === "region") {
+                                        setRegionId(Number(e.target.value))
+                                    }
+                                }}
                             >
-                                {field.options.map((option, index) => (
-                                    <option key={index} value={option.value}>
+                                {field.options.map((option) => (
+                                    <option key={option.value} value={option.value}>
                                         {option.label}
                                     </option>
                                 ))}
@@ -106,8 +165,8 @@ export const TiendaUserForm = () => {
                 )
             }
 
-            <button type="submit" className="btn btn-info">
-                Registrar Usuario
+            <button type="submit" className="btn btn-info" disabled={loading}>
+                {loading ? "Registrando..." : "Registrar Usuario"}
             </button>
         </form>
     )

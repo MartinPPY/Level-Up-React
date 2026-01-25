@@ -33,12 +33,12 @@ export const validateForm = (formData) => {
     console.log(formData.email)
 
     //validar rut
-    if (!formData.rut || formData.rut.trim().length < 7) {
-        errors.rut = 'El RUT es obligatorio'
+    if (!formData.run || formData.run.trim().length < 7) {
+        errors.run = 'El RUT es obligatorio'
     }
 
-    if (!validateRut(formData.rut)) {
-        errors.rut = 'El RUT no es válido'
+    if (!validateRut(formData.run)) {
+        errors.run = 'El RUT no es válido'
     }
 
     // Validar nombre
@@ -69,8 +69,8 @@ export const validateForm = (formData) => {
     }
 
     //Validar dirección
-    if (formData.direccion.trim().length < 3) {
-        errors.direccion = 'La dirección debe tener al menos 3 caracteres'
+    if (formData.addres.trim().length < 3) {
+        errors.addres = 'La dirección debe tener al menos 3 caracteres'
     }
 
     // Validar contraseña

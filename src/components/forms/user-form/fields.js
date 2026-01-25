@@ -5,7 +5,7 @@ export const getFields = ({
     setRegionId
 }) => [
         {
-            id: "rut",
+            id: "run",
             label: "Rut (Sin guión ni dígito verificador)",
             type: "text",
             placeholder: "Ej: 12345678K",
@@ -62,7 +62,7 @@ export const getFields = ({
             type: "select",
             options: [
                 { value: "", label: "Seleccione una región" },
-                ...regiones.map(r => ({ value: r.id, label: r.nombre }))
+                ...regiones.map(r => ({ value: r.id, label: r.name }))
             ],
             required: true,
             onChange: (e) => setRegionId(Number(e.target.value))
@@ -73,13 +73,13 @@ export const getFields = ({
             type: "select",
             options: [
                 { value: "", label: "Seleccione una comuna" },
-                ...comunasFiltradas.map(c => ({ value: c.id, label: c.nombre }))
+                ...comunasFiltradas.map(c => ({ value: c.id, label: c.name }))
             ],
             required: true,
             disabled: !regionId
         },
         {
-            id: "direccion",
+            id: "addres",
             label: "Dirección",
             type: "text",
             placeholder: "Ingrese su dirección",
