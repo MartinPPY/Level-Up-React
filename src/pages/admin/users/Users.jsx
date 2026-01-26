@@ -9,8 +9,11 @@ export const Users = () => {
                     <h1>Usuarios</h1>
                     <p>Gestiona los usuarios de la tienda</p>
                 </div>
-                <AddUser/>
             </div>
+
+            <section className="row card p-2 mb-3">
+                <AddUser/>                
+            </section>
 
             <section className="row card p-2">                
                 <UserTable/>

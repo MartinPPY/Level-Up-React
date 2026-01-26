@@ -1,24 +1,47 @@
-import { useRef, useState } from "react"
-import { comunas, regiones } from "../../../data/data"
+import { useEffect, useRef, useState } from "react"
 import { getFields } from "./fields"
 import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
+import { getLocations } from "../../../services/location.service"
+import { registerUser } from "../../../services/auth.service"
 
 export const UserForm = () => {
 
     const [regionId, setRegionId] = useState(null)
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
+    const [locations, setLocations] = useState({ comunas: [], regions: [] })
+    const [loading, setLoading] = useState(false)
     const formRef = useRef(null)
 
-    const comunasFiltradas = comunas.filter(
-        comuna => comuna.regionId === regionId
+    useEffect(() => {
+        const getLocationsData = async () => {
+            const { comunas, regions } = await getLocations()
+            setLocations({ comunas, regions })
+        }
+
+        getLocationsData()
+
+    }, [])
+
+
+
+    const comunasFiltradas = locations?.comunas.filter(
+        comuna => comuna.region.id === regionId
     )
 
-    const onSubmit = (e) => {
+    const fields = getFields({
+        regiones: locations.regions,
+        comunasFiltradas,
+        regionId,
+        setRegionId
+    })
+
+
+    const onSubmit = async (e) => {
         e.preventDefault()
 
-        console.log(formData)
+        setLoading(true)
         const validationErrors = validateForm(formData)
 
         if (Object.keys(validationErrors).length > 0) {
@@ -32,33 +55,56 @@ export const UserForm = () => {
             return
         }
 
-        Swal.fire({
-            title: "Éxito",
-            text: "Usuario creado correctamente",
-            icon: "success",
-            timer: 3000,
-            showConfirmButton: false
-        }).then(() => {
-            setFormData({})
-            setErrors({})
-            formRef.current.reset()
-        })
+        try {
+
+            await registerUser({
+                run: formData.run,
+                name: formData.name,
+                lastname: formData.lastName,
+                email: formData.email,
+                birthday: formData.birthday,
+                password: formData.password,
+                addres: formData.addres,
+                comunaId: parseInt(formData.comuna)
+            })
+
+            Swal.fire({
+                title: "Éxito",
+                text: "Usuario creado correctamente",
+                icon: "success",
+                timer: 3000,
+                showConfirmButton: false
+            }).then(() => {
+                setFormData({})
+                setErrors({})
+                formRef.current.reset()
+            })
+
+        } catch (error) {
+            console.error(error)
+
+            Swal.fire({
+                title: "Error",
+                text: error.response?.data?.message || "Error al crear el usuario",
+                icon: "error"
+            })
+            return
+
+        } finally {
+            setLoading(false)
+        }
 
     }
 
-    const fields = getFields({
-        regiones,
-        comunasFiltradas,
-        regionId,
-        setRegionId
-    })
-
     return (
-        <form onSubmit={onSubmit} ref={formRef}>
+        <form onSubmit={onSubmit} ref={formRef} className="row">
             {fields.map(field => (
-                <div className="mb-3" key={field.id}>
-                    <label htmlFor={field.id} className="form-label">
+                <div className="mb-3 col-lg-3" key={field.id}>
+                    <label htmlFor={field.id} className="form-label d-flex gap-2">
                         {field.label}
+                        {
+                            field.required && <span className="text-danger">*</span>
+                        }
                     </label>
 
                     {field.type === "select" ? (
@@ -67,7 +113,15 @@ export const UserForm = () => {
                             id={field.id}
                             required={field.required}
                             disabled={field.disabled}
-                            onChange={field.onChange}
+                            onChange={(e) => {
+                                // actualizar formData
+                                setFormData({ ...formData, [field.id]: e.target.value })
+
+                                // Si es región, actualizar regionId también
+                                if (field.id === "region") {
+                                    setRegionId(Number(e.target.value))
+                                }
+                            }}
                         >
                             {field.options.map((option, index) => (
                                 <option key={index} value={option.value}>
@@ -80,7 +134,6 @@ export const UserForm = () => {
                             type={field.type}
                             className="form-control"
                             id={field.id}
-                            placeholder={field.placeholder}
                             minLength={field.minLength}
                             maxLength={field.maxLength}
                             pattern={field.pattern}
@@ -103,9 +156,11 @@ export const UserForm = () => {
                 )
             }
 
-            <button type="submit" className="btn btn-dark">
-                Registrar Usuario
-            </button>
+            <div className="mb-3 col-lg-12">
+                <button type="submit" className="btn btn-dark">
+                    Registrar Usuario
+                </button>
+            </div>
         </form>
     )
 }

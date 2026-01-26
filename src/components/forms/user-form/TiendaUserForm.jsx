@@ -53,11 +53,13 @@ export const TiendaUserForm = () => {
             })
             setLoading(false)
             return
+        }else{
+            setErrors({})
         }
 
         try {
 
-            const response = await registerUser({
+            await registerUser({
                 run: formData.run,
                 name: formData.name,
                 lastname: formData.lastName,
@@ -69,7 +71,7 @@ export const TiendaUserForm = () => {
             })
 
         } catch (error) {
-             Swal.fire({
+            Swal.fire({
                 title: "Error",
                 text: error.response?.data?.message || "Error al crear el usuario",
                 icon: "error"

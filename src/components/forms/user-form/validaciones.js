@@ -30,7 +30,6 @@ const validateRut = (rut) => {
 
 export const validateForm = (formData) => {
     const  errors = {}
-    console.log(formData.email)
 
     //validar rut
     if (!formData.run || formData.run.trim().length < 7) {
