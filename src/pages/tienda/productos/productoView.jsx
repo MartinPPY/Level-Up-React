@@ -1,22 +1,34 @@
-import { Link, useNavigate,  } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
-import { productos,categorias } from "../../../data/data";
+import { productos, categorias } from "../../../data/data";
 import { useToast } from "../../../context/ToastContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
+import { getAllCategories } from "../../../services/category.service";
 
 export const ProductoView = () => {
     const { cart, setCart } = useCart();
     const { showToast } = useToast();
-    const {authenticated} = useAuth()
+    const { authenticated } = useAuth()
     const navigate = useNavigate()
-
     const [busqueda, setBusqueda] = useState("");
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
 
+    const [categorias, setCategorias] = useState([])
+
+    useEffect(() => {
+        const getAllCategorias = async () => {
+            const categorias = await getAllCategories()
+            setCategorias(categorias)
+        }
+
+        getAllCategorias()
+    }, [])
+
+
 
     const addToCart = (codigo) => {
-        if(!authenticated){
+        if (!authenticated) {
             navigate("/tienda/login")
             return
         }
@@ -68,9 +80,10 @@ export const ProductoView = () => {
                         value={categoriaSeleccionada}
                         onChange={(e) => setCategoriaSeleccionada(e.target.value)}
                     >
-                        {categorias.map(cat => (
-                            <option key={cat} value={cat}>
-                                {cat}
+                        <option value="todas">Todos</option>
+                        {categorias.map((cat, index) => (
+                            <option key={index} value={cat.id}>
+                                {cat.name}
                             </option>
                         ))}
                     </select>
