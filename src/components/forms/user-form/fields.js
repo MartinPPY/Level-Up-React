@@ -1,4 +1,5 @@
 export const getFields = ({
+    roles,
     regiones,
     comunasFiltradas,
     regionId,
@@ -49,12 +50,10 @@ export const getFields = ({
             label: "Tipo de usuario",
             type: "select",
             options: [
-                { value: "", label: "Seleccione un tipo" },
-                { value: "admin", label: "Administrador" },
-                { value: "seller", label: "Vendedor" },
-                { value: "user", label: "Usuario" }
+                { value: "", label: "Seleccione un tipo de usuario" },
+                ...roles.map(role => ({ value: role.id, label: role.name === "ROLE_ADMIN" ? "Administrador" : role.name === "ROLE_VENDEDOR" ? "Vendedor" : "Usuario" }))
             ],
-            required: true
+            required: true 
         },
         {
             id: "region",

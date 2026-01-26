@@ -4,6 +4,7 @@ import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
 import { getLocations } from "../../../services/location.service"
 import { registerUser } from "../../../services/auth.service"
+import { getAllRoles } from "../../../services/role.service"
 
 export const UserForm = () => {
 
@@ -11,6 +12,7 @@ export const UserForm = () => {
     const [formData, setFormData] = useState({})
     const [errors, setErrors] = useState({})
     const [locations, setLocations] = useState({ comunas: [], regions: [] })
+    const [roles, setRoles] = useState([])
     const [loading, setLoading] = useState(false)
     const formRef = useRef(null)
 
@@ -19,18 +21,22 @@ export const UserForm = () => {
             const { comunas, regions } = await getLocations()
             setLocations({ comunas, regions })
         }
+        const getRoles = async () => {
+            const roles = await getAllRoles()
+            setRoles(roles)
+        }
 
         getLocationsData()
+        getRoles()
 
     }, [])
-
-
 
     const comunasFiltradas = locations?.comunas.filter(
         comuna => comuna.region.id === regionId
     )
 
     const fields = getFields({
+        roles,
         regiones: locations.regions,
         comunasFiltradas,
         regionId,
@@ -108,7 +114,7 @@ export const UserForm = () => {
                     </label>
 
                     {field.type === "select" ? (
-                        <select
+                        <select                        
                             className="form-select"
                             id={field.id}
                             required={field.required}
@@ -157,8 +163,8 @@ export const UserForm = () => {
             }
 
             <div className="mb-3 col-lg-12">
-                <button type="submit" className="btn btn-dark">
-                    Registrar Usuario
+                <button type="submit" className="btn btn-dark" disabled={loading}>
+                    {loading ? "Registrando..." : "Registrar Usuario"}
                 </button>
             </div>
         </form>
