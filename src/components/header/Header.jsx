@@ -1,4 +1,4 @@
-import { ShoppingCart } from "lucide-react"
+import { Gamepad2, ShoppingCart } from "lucide-react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useCart } from "../../context/CartContext"
 import { useAuth } from "../../context/AuthContext"
@@ -32,7 +32,7 @@ export const Header = () => {
         <header className="bg-dark border-bottom border-secondary sticky-top p-2">
             <nav className="navbar navbar-expand-lg navbar-dark container">
                 <Link to="/tienda" className="navbar-brand fw-bold fs-4">
-                    🎮 Level Up
+                    <Gamepad2 className="text-info"/> Level Up
                 </Link>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">

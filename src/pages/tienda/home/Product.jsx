@@ -44,7 +44,7 @@ export const Product = () => {
                 <p>Una selección de nuestros productos más populares</p>
             </div>
 
-            <div className="scroll" style={{ overflowX: 'hidden', height: '700px', scrollbarWidth: 'thin' }}>
+            <div className="scroll">
                 <div className="row row-cols-1 row-cols-md-3 g-4">
                     {
                         productos.map((p) => (

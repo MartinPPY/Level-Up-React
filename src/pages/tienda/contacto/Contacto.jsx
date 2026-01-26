@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
+import { Mail, MapPin, Phone } from "lucide-react"
 
 export const Contacto = () => {
 
@@ -48,28 +49,31 @@ export const Contacto = () => {
             </div>
 
             <div className="row g-5">
-                <div className="col-md-6">
-                    <h4>Información de contacto</h4>
-                    <p><i className="bi bi-envelope"></i> contacto@levelup.cl</p>
-                    <p><i className="bi bi-telephone"></i> +56 9 1234 5678</p>
-                    <p><i className="bi bi-geo-alt"></i> Chile</p>
+
+                <div className="col-md-6 d-flex justify-content-center">
+                    <div>
+                        <h4>Información de contacto</h4>
+                        <p className="d-flex gap-2"><Mail /> contacto@levelup.cl</p>
+                        <p className="d-flex gap-2"><Phone /> +56 9 1234 5678</p>
+                        <p className="d-flex gap-2"><MapPin/> Chile</p>
+                    </div>
                 </div>
 
                 <div className="col-md-6">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label className="form-label">Nombre y Apellido:</label>
-                            <input type="text" className="form-control border bg-dark text-white border-info tienda-registro-placeholder" id="name" maxLength="100" placeholder="¿Como te llamas?" value={name} onChange={(e) => setName(e.target.value)} required />
+                            <input type="text" className="form-control border bg-dark text-white border-info tienda-registro-placeholder" id="name" maxLength="100" value={name} onChange={(e) => setName(e.target.value)} required />
                         </div>
 
                         <div className="mb-3">
                             <label className="form-label">Correo:</label>
-                            <input type="email" className="form-control border bg-dark text-white border-info tienda-registro-placeholder" id="email" maxLength="100" placeholder="Validos: @duoc / duocuc y gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                            <input type="email" className="form-control border bg-dark text-white border-info tienda-registro-placeholder" id="email" maxLength="100" value={email} onChange={(e) => setEmail(e.target.value)} required />
                         </div>
 
                         <div className="mb-3">
                             <label className="form-label">Mensaje:</label>
-                            <textarea className="form-control border bg-dark text-white border-info tienda-registro-placeholder" rows="4" id="message" placeholder="Cuentanos en que te ayudamos....." maxLength="500" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
+                            <textarea className="form-control border bg-dark text-white border-info tienda-registro-placeholder" rows="4" id="message" maxLength="500" value={message} onChange={(e) => setMessage(e.target.value)} required></textarea>
                         </div>
 
                         {

@@ -9,12 +9,12 @@ export const Blogs = () => {
             <main className="container-fluid">
 
                 <section className="container py-5">
-                    <h1 className="display-4 fw-bold mb-4 text-center">Noticias Recientes</h1>
+                    <h1 className="display-4 fw-bold mb-4 text-center text-white">Noticias Recientes</h1>
 
                     <article className="row g-4">
 
                         <div className="card p-4 col-lg-12 bg-black">
-                            <div className="d-flex flex-wrap">
+                            <div className="d-flex flex-wrap p-2">
                                 <div className="d-flex flex-column gap-2 col-lg-6 text-white">
                                     <h5>Ubisoft cierra su estudio en Halifax semanas después de sindicalizarse </h5>
                                     <p className="">
@@ -37,7 +37,7 @@ export const Blogs = () => {
                             </div>
                         </div>
                         <div className="card p-4 col-lg-12 bg-black text-white">
-                            <div className="d-flex flex-wrap">
+                            <div className="d-flex flex-wrap p-2">
                                 <div className="d-flex flex-column gap-2 col-lg-6">
                                     <h5>Debate sobre el uso de IA en desarrollo de juegos: CEO de Arc Raiders responde </h5>
                                     <p className="">

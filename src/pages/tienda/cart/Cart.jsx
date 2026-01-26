@@ -1,7 +1,7 @@
 import Swal from "sweetalert2"
 import { useCart } from "../../../context/CartContext"
 import { productos } from "../../../data/data"
-import {useToast} from '../../../context/ToastContext'
+import { useToast } from '../../../context/ToastContext'
 
 export const Cart = () => {
 
@@ -36,12 +36,12 @@ export const Cart = () => {
     }
 
     const clearCart = () => {
-        
+
         setCart([])
         showToast('Carrito vaciado', 'success')
     }
 
-    const comprar = () =>{
+    const comprar = () => {
         Swal.fire({
             title: 'Compra realizada',
             text: 'Tu compra ha sido realizada correctamente',
@@ -84,18 +84,22 @@ export const Cart = () => {
 
                 </div>
                 <div className="col-lg-4 p-5 d-flex flex-column gap-5 border-start border-top text-white">
-                    <div className="d-flex justify-content-around">
-                        <h5>Subtotal:</h5>  
-                        <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad), 0).toLocaleString('es-CL')} CLP</h5>
+
+                    <div className="d-flex flex-column">
+                        <div className="d-flex justify-content-around">
+                            <h5>Subtotal:</h5>
+                            <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad), 0).toLocaleString('es-CL')} CLP</h5>
+                        </div>
+                        <div className="d-flex justify-content-around">
+                            <h5>Descuento:</h5>
+                            <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.2), 0).toLocaleString('es-CL')} CLP</h5>
+                        </div>
+                        <div className="d-flex justify-content-around">
+                            <h3>Total:</h3>
+                            <h3>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.8), 0).toLocaleString('es-CL')} CLP</h3>
+                        </div>
                     </div>
-                    <div className="d-flex justify-content-around">
-                        <h5>Descuento:</h5>  
-                        <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.2), 0).toLocaleString('es-CL')} CLP</h5>
-                    </div>
-                    <div className="d-flex justify-content-around">
-                        <h3>Total:</h3>
-                        <h3>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.8), 0).toLocaleString('es-CL')} CLP</h3>
-                    </div>
+
                     <div className="d-flex flex-column gap-3">
                         <fieldset className="d-flex flex-column">
                             <label htmlFor="cupon" className="form-label"> Cupon de descuento </label>

@@ -18,23 +18,24 @@ export const Tienda = () => {
     return (
         <>
             <div className="d-flex flex-column min-vh-100 bg-dark   ">
-                <main className="flex-grow-1">
-                    <Header />
-                        <Routes>
-                            <Route index element={<Navigate to="home" />} />
-                            <Route path="/home" element={<Home />} />
-                            <Route path="/registro" element={<Registro />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/contacto" element={<Contacto />} />
-                            <Route path="/producto-detalle/:codigo" element={<ProductDetail />} />
-                            <Route path="/nosotros" element={<Nosotros />} />
-                            <Route path="/blogs" element={<Blogs />} />
-                            <Route path="/cart" element={<Cart />} />
-                            <Route path="/productos" element={<ProductoView />} />
-                            <Route path="*" element={<NotFound />} />
-                        </Routes>
-                    <Footer />
+                <Header />
+                <main className="flex-fill">
+                    <Routes>
+                        <Route index element={<Navigate to="home" />} />
+                        <Route path="/home" element={<Home />} />
+                        <Route path="/registro" element={<Registro />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/contacto" element={<Contacto />} />
+                        <Route path="/producto-detalle/:codigo" element={<ProductDetail />} />
+                        <Route path="/nosotros" element={<Nosotros />} />
+                        <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/cart" element={<Cart />} />
+                        <Route path="/productos" element={<ProductoView />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+
                 </main>
+                <Footer />
             </div>
         </>
     )
