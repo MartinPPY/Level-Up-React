@@ -40,12 +40,13 @@ export const ProductForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} ref={formRef}>
+    <form onSubmit={handleSubmit} ref={formRef} className="row">
       {fields.map(field => (
         field.type === "select" ? (
-          <div key={field.id} className="mb-3">
-            <label htmlFor={field.id} className="form-label">
+          <div key={field.id} className="mb-3 col-lg-4 p-2">
+            <label htmlFor={field.id} className="form-label d-flex gap-2">
               {field.label}
+              {field.required && <span className="text-danger">*</span>}
             </label>
             <select id={field.id} className="form-select" value={formData[field.id]} onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}>
               {field.options.map(option => (
@@ -56,11 +57,12 @@ export const ProductForm = () => {
             </select>
           </div>
         ) : (
-          <div key={field.id} className="mb-3">
-            <label htmlFor={field.id} className="form-label">
+          <div key={field.id} className="mb-3 col-lg-4 p-2">
+            <label htmlFor={field.id} className="form-label d-flex gap-2">
               {field.label}
+              {field.required && <span className="text-danger">*</span>}
             </label>
-            <input type={field.type} id={field.id} placeholder={field.placeholder} required={field.required} onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })} className="form-control" />
+            <input type={field.type} id={field.id} required={field.required} onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })} className="form-control" />
           </div>
         )
       ))}
@@ -78,7 +80,9 @@ export const ProductForm = () => {
 
 
 
-      <button type="submit" className="btn btn-dark">Agregar Producto</button>
+      <div className="col-lg-12">
+        <button type="submit" className="btn btn-dark">Agregar Producto</button>
+      </div>
     </form >
   )
 }

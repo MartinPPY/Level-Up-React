@@ -9,8 +9,14 @@ export const Products = () => {
                     <h1>Productos</h1>
                     <p>Gestiona los productos de la tienda</p>
                 </div>
+            </div>
+
+            <div className="row card p-2 mb-3">
+                <h3>Agregar Producto</h3>
+                <p>Ingresa los datos del producto</p>
                 <AddProducts />
             </div>
+
             <div className="row card p-2">
                 <ProductTable />
             </div>
