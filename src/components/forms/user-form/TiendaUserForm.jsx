@@ -55,8 +55,6 @@ export const TiendaUserForm = () => {
             return
         }
 
-        console.log(formData)
-
         try {
 
             const response = await registerUser({
@@ -69,17 +67,14 @@ export const TiendaUserForm = () => {
                 addres: formData.addres,
                 comunaId: parseInt(formData.comuna)
             })
-            console.log(response)
-
 
         } catch (error) {
-            console.error(error)
              Swal.fire({
                 title: "Error",
                 text: error.response?.data?.message || "Error al crear el usuario",
                 icon: "error"
             })
-            setLoading(false)
+            return
 
 
         } finally {
@@ -114,7 +109,7 @@ export const TiendaUserForm = () => {
                         {field.type === "select" ? (
                             <select
                                 id={field.id}
-                                className="form-select bg-dark text-white border-info tienda-registro-placeholder"
+                                className="form-select"
                                 required={field.required}
                                 disabled={field.disabled}
                                 value={formData[field.id] || ""}
@@ -137,9 +132,8 @@ export const TiendaUserForm = () => {
                         ) : (
                             <input
                                 type={field.type}
-                                className="form-control bg-dark text-white border-info tienda-registro-placeholder"
+                                className="form-control"
                                 id={field.id}
-                                placeholder={field.placeholder}
                                 minLength={field.minLength}
                                 maxLength={field.maxLength}
                                 pattern={field.pattern}
