@@ -4,6 +4,8 @@ import { useCart } from "../../../context/CartContext"
 import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "../../../context/ToastContext"
 import { useAuth } from "../../../context/AuthContext"
+import { useEffect, useState } from "react"
+import { getAllProducts } from "../../../services/product.service"
 
 
 export const Product = () => {
@@ -11,7 +13,17 @@ export const Product = () => {
     const { setCart, cart } = useCart()
     const { showToast } = useToast()
     const { authenticated } = useAuth()
+    const [productos,setProductos] = useState([])
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        const getProducts = async()=>{
+            const response = await getAllProducts()
+            setProductos(response)
+        }
+
+        getProducts()
+    },[])
 
     const addToCart = (codigo) => {
 
@@ -47,13 +59,13 @@ export const Product = () => {
             <div className="scroll">
                 <div className="row row-cols-1 row-cols-md-3 g-4">
                     {
-                        productos.map((p) => (
-                            <div className="col" key={p.codigo}>
+                        productos.map((p,index) => (
+                            <div className="col" key={index}>
                                 <div className="card bg-black text-white h-100 border-secondary tienda-cart">
-                                    <img src={p.image} alt={p.nombre} className="card-img-top" />
+                                    <img src={p.image} alt={p.name} className="card-img-top" />
                                     <div className="card-body">
-                                        <h5 className="card-title">{p.nombre}</h5>
-                                        <p className="card-text">{p.categoria}</p>
+                                        <h5 className="card-title">{p.name}</h5>
+                                        <p className="card-text">{p.category.name}</p>
                                     </div>
                                     <div className="card-footer d-flex flex-column gap-2 border-secondary">
                                         <div>
@@ -64,13 +76,13 @@ export const Product = () => {
                                         <div className="d-flex gap-2 justify-content-between align-items-center">
                                             <Link
                                                 className="btn btn-sm btn-outline-info"
-                                                to={`/tienda/producto-detalle/${p.codigo}`}
+                                                to={`/tienda/producto-detalle/${p.code}`}
                                             >
                                                 <Eye />
                                                 Ver detalle
                                             </Link>
                                             <button className="btn btn-sm btn-outline-light d-flex align-items-center gap-2" onClick={
-                                                () => addToCart(p.codigo)
+                                                () => addToCart(p.code)
                                             }>
                                                 <ShoppingCart />
                                                 Añadir al carrito

@@ -1,7 +1,20 @@
+import { useEffect, useState } from "react"
 import { AddProducts } from "./AddProducts"
 import { ProductTable } from "./ProductTable"
+import { getAllProducts } from "../../../services/product.service"
 
 export const Products = () => {
+
+    const [productos, setProductos] = useState([])
+
+    useEffect(() => {
+        const getAllProductos = async () => {
+            const response = await getAllProducts()
+            setProductos(response)
+        }
+        getAllProductos()
+    }, [])
+
     return (
         <main className="container-fluid p-5">
             <div className="d-flex justify-content-between align-items-center mb-4">
@@ -18,7 +31,7 @@ export const Products = () => {
             </div>
 
             <div className="row card p-2">
-                <ProductTable />
+                <ProductTable productos={productos} />
             </div>
         </main>
     )

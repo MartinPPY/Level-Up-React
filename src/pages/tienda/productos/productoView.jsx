@@ -1,19 +1,19 @@
 import { Link, useNavigate, } from "react-router-dom";
 import { useCart } from "../../../context/CartContext";
-import { productos, categorias } from "../../../data/data";
 import { useToast } from "../../../context/ToastContext";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { getAllCategories } from "../../../services/category.service";
+import { getAllProducts } from "../../../services/product.service";
 
 export const ProductoView = () => {
-    const { cart, setCart } = useCart();
+    const { setCart } = useCart();
     const { showToast } = useToast();
     const { authenticated } = useAuth()
     const navigate = useNavigate()
+    const [productos, setProductos] = useState([])
     const [busqueda, setBusqueda] = useState("");
-    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState("Todas");
-
+    const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
     const [categorias, setCategorias] = useState([])
 
     useEffect(() => {
@@ -22,23 +22,27 @@ export const ProductoView = () => {
             setCategorias(categorias)
         }
 
+        const getAllProductos = async () => {
+            const productos = await getAllProducts()
+            setProductos(productos)
+        }
+
         getAllCategorias()
+        getAllProductos()
     }, [])
 
-
-
-    const addToCart = (codigo) => {
+    const addToCart = (code) => {
         if (!authenticated) {
             navigate("/tienda/login")
             return
         }
-        const producto = productos.find(p => p.codigo === codigo);
+        const producto = productos.find(p => p.code === code);
         if (!producto) return;
 
         setCart(prevCart =>
-            prevCart.some(item => item.codigo === codigo)
+            prevCart.some(item => item.code === code)
                 ? prevCart.map(item =>
-                    item.codigo === codigo
+                    item.code === code
                         ? { ...item, cantidad: item.cantidad + 1 }
                         : item
                 )
@@ -50,12 +54,12 @@ export const ProductoView = () => {
 
     const productosFiltrados = productos.filter(prod => {
         const coincideBusqueda =
-            prod.nombre.toLowerCase().includes(busqueda.toLowerCase()) ||
-            prod.descripcion.toLowerCase().includes(busqueda.toLowerCase());
+            prod.name?.toLowerCase().includes(busqueda.toLowerCase()) ||
+            prod.description?.toLowerCase().includes(busqueda.toLowerCase());
 
         const coincideCategoria =
-            categoriaSeleccionada === "Todas" ||
-            prod.categoria === categoriaSeleccionada;
+            categoriaSeleccionada === null ||
+            prod.category.id === categoriaSeleccionada;
 
         return coincideBusqueda && coincideCategoria;
     });
@@ -77,10 +81,15 @@ export const ProductoView = () => {
                 <div className="col-md-4 mb-2">
                     <select
                         className="form-select bg-dark text-white border-secondary"
-                        value={categoriaSeleccionada}
-                        onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+                        value={categoriaSeleccionada ?? ""}
+                        onChange={
+                            (e) =>
+                                setCategoriaSeleccionada(
+                                    e.target.value === "" ? null : Number(e.target.value)
+                                )
+                        }
                     >
-                        <option value="todas">Todos</option>
+                        <option value="">Todos</option>
                         {categorias.map((cat, index) => (
                             <option key={index} value={cat.id}>
                                 {cat.name}
@@ -91,8 +100,8 @@ export const ProductoView = () => {
             </div>
 
             <div className="row">
-                {productosFiltrados.map(prod => (
-                    <div className="col-lg-4 col-md-6 col-12 my-3" key={prod.codigo}>
+                {productosFiltrados.map((prod, index) => (
+                    <div className="col-lg-4 col-md-6 col-12 my-3" key={index}>
                         <div className="card bg-dark text-white border-secondary h-100 shadow">
                             <img
                                 src={prod.image}
@@ -103,11 +112,11 @@ export const ProductoView = () => {
 
                             <div className="card-body d-flex flex-column">
                                 <h5 className="card-title text-info">
-                                    {prod.nombre}
+                                    {prod.name}
                                 </h5>
 
                                 <p className="card-text small text-secondary text-truncate">
-                                    {prod.descripcion}
+                                    {prod.description}
                                 </p>
 
                                 <div className="mt-auto">
@@ -118,7 +127,7 @@ export const ProductoView = () => {
                                     <div className="d-grid gap-2">
                                         <button
                                             className="btn btn-info"
-                                            onClick={() => addToCart(prod.codigo)}
+                                            onClick={() => addToCart(prod.code)}
                                         >
                                             <i className="bi bi-cart-plus me-2"></i>
                                             Agregar al carrito
@@ -126,7 +135,7 @@ export const ProductoView = () => {
 
                                         <Link
                                             className="btn btn-outline-success btn-sm"
-                                            to={`/tienda/producto-detalle/${prod.codigo}`}
+                                            to={`/tienda/producto-detalle/${prod.code}`}
                                         >
                                             Ver descripción
                                         </Link>
