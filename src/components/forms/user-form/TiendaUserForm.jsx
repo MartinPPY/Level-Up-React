@@ -32,6 +32,7 @@ export const TiendaUserForm = () => {
     )
 
     const fields = getFields({
+        roles:[],
         regiones: locations.regions,
         comunasFiltradas,
         regionId,

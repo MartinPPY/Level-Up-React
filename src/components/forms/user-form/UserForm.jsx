@@ -3,14 +3,13 @@ import { getFields } from "./fields"
 import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
 import { getLocations } from "../../../services/location.service"
-import { registerUser } from "../../../services/auth.service"
 import { getAllRoles } from "../../../services/role.service"
-import { getAllUsers } from "../../../services/user.service"
+import { createUser, getAllUsers } from "../../../services/user.service"
 
-export const UserForm = ({setUser}) => {
+export const UserForm = ({ setUser, formData, setFormData }) => {
 
     const [regionId, setRegionId] = useState(null)
-    const [formData, setFormData] = useState({})
+
     const [errors, setErrors] = useState({})
     const [locations, setLocations] = useState({ comunas: [], regions: [] })
     const [roles, setRoles] = useState([])
@@ -18,6 +17,12 @@ export const UserForm = ({setUser}) => {
     const formRef = useRef(null)
 
     useEffect(() => {
+
+        if (formData.region) {
+            setRegionId(Number(formData.region))
+        }
+
+
         const getLocationsData = async () => {
             const { comunas, regions } = await getLocations()
             setLocations({ comunas, regions })
@@ -30,7 +35,7 @@ export const UserForm = ({setUser}) => {
         getLocationsData()
         getRoles()
 
-    }, [])
+    }, [formData.region])
 
     const comunasFiltradas = locations?.comunas.filter(
         comuna => comuna.region.id === regionId
@@ -64,7 +69,7 @@ export const UserForm = ({setUser}) => {
 
         try {
 
-            await registerUser({
+            await createUser({
                 run: formData.run,
                 name: formData.name,
                 lastname: formData.lastName,
@@ -118,9 +123,10 @@ export const UserForm = ({setUser}) => {
                     </label>
 
                     {field.type === "select" ? (
-                        <select                        
+                        <select
                             className="form-select"
                             id={field.id}
+                            value={formData[field.id] ?? ""}
                             required={field.required}
                             disabled={field.disabled}
                             onChange={(e) => {
@@ -147,6 +153,7 @@ export const UserForm = ({setUser}) => {
                             minLength={field.minLength}
                             maxLength={field.maxLength}
                             pattern={field.pattern}
+                            value={formData[field.id] ?? ""}
                             required={field.required}
                             onInput={(e) => setFormData({ ...formData, [field.id]: e.target.value })}
                         />
@@ -168,7 +175,7 @@ export const UserForm = ({setUser}) => {
 
             <div className="mb-3 col-lg-12">
                 <button type="submit" className="btn btn-dark" disabled={loading}>
-                    {loading ? "Registrando..." : "Registrar Usuario"}
+                    {loading ? "Registrando..." : "Guardar Cambios"}
                 </button>
             </div>
         </form>

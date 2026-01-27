@@ -6,6 +6,19 @@ import { getAllUsers } from "../../../services/user.service"
 export const Users = () => {
 
     const [users, setUsers] = useState([])
+    const [formData, setFormData] = useState({
+        run: "",
+        name: "",
+        lastName: "",
+        email: "",
+        birthday: "",
+        userType: "",
+        region: "",
+        comuna: "",
+        addres: "",
+        password: "",
+        confirmPassword: ""
+    })
 
     useEffect(() => {
         const getAllUsersData = async () => {
@@ -25,11 +38,11 @@ export const Users = () => {
             </div>
 
             <section className="row card p-2 mb-3">
-                <AddUser setUser={setUsers} />
+                <AddUser setUser={setUsers} formData={formData} setFormData={setFormData} />
             </section>
 
             <section className="row card p-2">
-                <UserTable users={users} />
+                <UserTable users={users} setUsers={setUsers} setFormData={setFormData} />
             </section>
 
         </main>
