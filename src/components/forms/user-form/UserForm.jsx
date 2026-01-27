@@ -5,8 +5,9 @@ import Swal from "sweetalert2"
 import { getLocations } from "../../../services/location.service"
 import { registerUser } from "../../../services/auth.service"
 import { getAllRoles } from "../../../services/role.service"
+import { getAllUsers } from "../../../services/user.service"
 
-export const UserForm = () => {
+export const UserForm = ({setUser}) => {
 
     const [regionId, setRegionId] = useState(null)
     const [formData, setFormData] = useState({})
@@ -73,6 +74,9 @@ export const UserForm = () => {
                 addres: formData.addres,
                 comunaId: parseInt(formData.comuna)
             })
+
+            const users = await getAllUsers()
+            setUser(users)
 
             Swal.fire({
                 title: "Éxito",
