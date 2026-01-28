@@ -32,7 +32,7 @@ export const Header = () => {
         <header className="bg-dark border-bottom border-secondary sticky-top p-2">
             <nav className="navbar navbar-expand-lg navbar-dark container">
                 <Link to="/tienda" className="navbar-brand fw-bold fs-4">
-                    <Gamepad2 className="text-info"/> Level Up
+                    <Gamepad2 className="text-info" /> Level Up
                 </Link>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
@@ -53,7 +53,17 @@ export const Header = () => {
                     <div className="d-flex gap-3 align-items-center">
                         {
                             authenticated ? (
-                                <button className="tienda btn btn-sm btn-outline-danger" onClick={logOut}>Cerrar sesión</button>
+                                <>
+                                    <Link className="position-relative text-white" to="/tienda/cart"
+                                        aria-controls="cart">
+                                        <ShoppingCart />
+                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {cart.reduce((total, item) => total + item.cantidad, 0)}
+                                        </span>
+                                    </Link>
+                                    <button className="tienda btn btn-sm btn-outline-danger" onClick={logOut}>Cerrar sesión</button>
+                                </>
+
                             ) : (
                                 <>
                                     <Link to="/tienda/login" className="tienda btn btn-sm btn-outline-info">Iniciar sesión</Link>
@@ -61,13 +71,6 @@ export const Header = () => {
                                 </>
                             )
                         }
-                        <Link className="position-relative text-white" to="/tienda/cart"
-                            aria-controls="cart">
-                            <ShoppingCart />
-                            <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                {cart.reduce((total, item) => total + item.cantidad, 0)}
-                            </span>
-                        </Link>
                     </div>
                 </div>
             </nav>
