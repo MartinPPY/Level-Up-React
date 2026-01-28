@@ -2,11 +2,23 @@ import Swal from "sweetalert2"
 import { useCart } from "../../../context/CartContext"
 import { productos } from "../../../data/data"
 import { useToast } from '../../../context/ToastContext'
+import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../../context/AuthContext"
+import { useEffect } from "react"
 
 export const Cart = () => {
 
     const { setCart, cart } = useCart()
     const { showToast } = useToast()
+    const { authenticated } = useAuth()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!authenticated) {
+            navigate("/tienda/login")
+        }
+
+    }, [])
 
     const addToCart = (codigo) => {
         const producto = productos.find((p) => p.codigo === codigo)

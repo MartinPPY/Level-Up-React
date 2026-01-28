@@ -6,12 +6,11 @@ import { useAuth } from "../../../context/AuthContext";
 import { getAllCategories } from "../../../services/category.service";
 import { getAllProducts } from "../../../services/product.service";
 
-export const ProductoView = () => {
+export const ProductoView = ({productos}) => {
     const { setCart } = useCart();
     const { showToast } = useToast();
     const { authenticated } = useAuth()
     const navigate = useNavigate()
-    const [productos, setProductos] = useState([])
     const [busqueda, setBusqueda] = useState("");
     const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
     const [categorias, setCategorias] = useState([])
@@ -21,14 +20,7 @@ export const ProductoView = () => {
             const categorias = await getAllCategories()
             setCategorias(categorias)
         }
-
-        const getAllProductos = async () => {
-            const productos = await getAllProducts()
-            setProductos(productos)
-        }
-
         getAllCategorias()
-        getAllProductos()
     }, [])
 
     const addToCart = (code) => {

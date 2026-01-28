@@ -1,52 +1,44 @@
 import { Eye, ShoppingCart } from "lucide-react"
-import { productos } from "../../../data/data"
 import { useCart } from "../../../context/CartContext"
 import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "../../../context/ToastContext"
 import { useAuth } from "../../../context/AuthContext"
-import { useEffect, useState } from "react"
-import { getAllProducts } from "../../../services/product.service"
+import { getProductByCode } from "../../../services/product.service"
 
 
-export const Product = () => {
+export const Product = ({ productos }) => {
 
     const { setCart, cart } = useCart()
     const { showToast } = useToast()
     const { authenticated } = useAuth()
-    const [productos,setProductos] = useState([])
     const navigate = useNavigate()
 
-    useEffect(()=>{
-        const getProducts = async()=>{
-            const response = await getAllProducts()
-            setProductos(response)
-        }
+    const addToCart = async (codigo) => {
 
-        getProducts()
-    },[])
-
-    const addToCart = (codigo) => {
-
-        if(!authenticated){
+        if (!authenticated) {
             navigate("/tienda/login")
             return
         }
 
-        const producto = productos.find((p) => p.codigo === codigo)
+        try {
+            const producto = await getProductByCode(codigo)
 
-        if (!producto) return
+            setCart(prevCart =>
+                prevCart.some(item => item.code === code)
+                    ? prevCart.map(item =>
+                        item.code === code
+                            ? { ...item, cantidad: item.cantidad + 1 }
+                            : item
+                    )
+                    : [...prevCart, { ...producto, cantidad: 1 }]
+            )
 
-        setCart(prevCart =>
-            prevCart.some(item => item.codigo === codigo)
-                ? prevCart.map(item =>
-                    item.codigo === codigo
-                        ? { ...item, cantidad: item.cantidad + 1 }
-                        : item
-                )
-                : [...prevCart, { ...producto, cantidad: 1 }]
-        )
+            showToast(`Producto ${producto.nombre} añadido al carrito`, 'info')
 
-        showToast(`Producto ${producto.nombre} añadido al carrito`, 'info')
+
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (
@@ -59,7 +51,7 @@ export const Product = () => {
             <div className="scroll">
                 <div className="row row-cols-1 row-cols-md-3 g-4">
                     {
-                        productos.map((p,index) => (
+                        productos.map((p, index) => (
                             <div className="col" key={index}>
                                 <div className="card bg-black text-white h-100 border-secondary tienda-cart">
                                     <img src={p.image} alt={p.name} className="card-img-top" />

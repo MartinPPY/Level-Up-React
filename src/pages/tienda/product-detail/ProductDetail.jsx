@@ -1,22 +1,30 @@
 import { useParams } from "react-router-dom"
 import { productos } from "../../../data/data"
 import { useCart } from "../../../context/CartContext"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useToast } from '../../../context/ToastContext'
 import { useAuth } from "../../../context/AuthContext"
 import { useNavigate } from "react-router-dom"
+import { getProductByCode } from "../../../services/product.service"
 
 export const ProductDetail = () => {
 
     const { codigo } = useParams()
     const { setCart, cart } = useCart()
     const { showToast } = useToast()
-    const {authenticated} = useAuth()
-    const navigate = useNavigate()
-    
+    const { authenticated } = useAuth()
+    const [producto, setProducto] = useState({})
     const [quantity, setQuantity] = useState(1)
+    const navigate = useNavigate()
 
-    const producto = productos.find((p) => p.codigo === codigo)
+    useEffect(() => {
+        const getProductDetails = async () => {
+            const response = await getProductByCode(codigo)
+            setProducto(response)            
+        }
+
+        getProductDetails()
+    },[])
 
     const addToCart = (e) => {
         e.preventDefault()
@@ -25,7 +33,7 @@ export const ProductDetail = () => {
 
         if (!producto) return
 
-        if(!authenticated){
+        if (!authenticated) {
             navigate("/tienda/login")
             return
         }
@@ -53,12 +61,12 @@ export const ProductDetail = () => {
                 </div>
                 <div className="col-12 col-lg-4 py-5 border d-flex flex-column gap-3">
                     <div className="p-2">
-                        <span>SKU: {producto.codigo} </span>
-                        <h2 >{producto.nombre}</h2>
+                        <span>SKU: {producto.code} </span>
+                        <h2 >{producto.name}</h2>
                         <span >{new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(producto.precio)} CLP</span>
                     </div>
                     <div className="border"></div>
-                    <p >{producto.descripcion}</p>
+                    <p >{producto.description}</p>
                     <div className="border"></div>
                     <form className="d-flex flex-column gap-3 justify-content-between">
                         <fieldset className="d-flex flex-column gap-2 mb-3">

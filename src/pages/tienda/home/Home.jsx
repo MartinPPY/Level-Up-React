@@ -3,11 +3,11 @@ import { Product } from "./Product"
 
 
 
-export const Home = () => {
+export const Home = ({productos}) => {
     return (
         <main className="container-fluid bg-dark">
             <Hero />
-            <Product />
+            <Product productos={productos} />
         </main>
     )
 }

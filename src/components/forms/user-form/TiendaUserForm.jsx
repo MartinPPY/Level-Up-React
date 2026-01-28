@@ -84,13 +84,7 @@ export const TiendaUserForm = () => {
             setLoading(false)
         }
 
-        Swal.fire({
-            title: "Éxito",
-            text: "Usuario creado correctamente",
-            icon: "success",
-            timer: 3000,
-            showConfirmButton: false
-        }).then(() => {
+        Swal.fire("Éxito","Usuario creado correctamente","success").then(() => {
             setFormData({})
             setErrors({})
             formRef.current.reset()

@@ -11,10 +11,25 @@ import { Blogs } from "./blogs/Blogs"
 import { Cart } from "./cart/Cart"
 import { ProductoView } from "./productos/productoView"
 import { NotFound } from "../../components/not-found/NotFound"
+import { useEffect, useState } from "react"
+import { getAllProducts } from "../../services/product.service"
 
 
 
 export const Tienda = () => {
+
+    const [productos, setProductos] = useState([])
+
+    useEffect(() => {
+
+        const getProdData = async () => {
+            const response = await getAllProducts()
+            setProductos(response)
+        }
+
+        getProdData()
+    }, [])
+
     return (
         <>
             <div className="d-flex flex-column min-vh-100 bg-dark   ">
@@ -22,7 +37,7 @@ export const Tienda = () => {
                 <main className="flex-fill">
                     <Routes>
                         <Route index element={<Navigate to="home" />} />
-                        <Route path="/home" element={<Home />} />
+                        <Route path="/home" element={<Home productos={productos} />} />
                         <Route path="/registro" element={<Registro />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/contacto" element={<Contacto />} />
@@ -30,7 +45,7 @@ export const Tienda = () => {
                         <Route path="/nosotros" element={<Nosotros />} />
                         <Route path="/blogs" element={<Blogs />} />
                         <Route path="/cart" element={<Cart />} />
-                        <Route path="/productos" element={<ProductoView />} />
+                        <Route path="/productos" element={<ProductoView productos={productos} />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
 
