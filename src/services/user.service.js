@@ -20,3 +20,8 @@ export const getUserById = async (id) => {
     const response = await api.get(`/users/${id}`)
     return response.data
 }
+
+export const editUser = async (id,user)=>{
+    const response = await api.put(`/users/${id}`, user)
+    return response.data
+}

@@ -6,6 +6,8 @@ import { getAllUsers } from "../../../services/user.service"
 export const Users = () => {
 
     const [users, setUsers] = useState([])
+    const [isEditing, setIsEditing] = useState(false)
+    const [editingUserId, setEditingUserId] = useState(null)
     const [formData, setFormData] = useState({
         run: "",
         name: "",
@@ -38,11 +40,27 @@ export const Users = () => {
             </div>
 
             <section className="row card p-2 mb-3">
-                <AddUser setUser={setUsers} formData={formData} setFormData={setFormData} />
+                <AddUser
+                    setUser={setUsers} 
+                    formData={formData} 
+                    setFormData={setFormData}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    editingUserId={editingUserId}
+                    setEditingUserId={setEditingUserId}
+                />
             </section>
 
             <section className="row card p-2">
-                <UserTable users={users} setUsers={setUsers} setFormData={setFormData} />
+                <UserTable 
+                    users={users} 
+                    setUsers={setUsers} 
+                    setFormData={setFormData} 
+                    isEditing={isEditing} 
+                    setIsEditing={setIsEditing} 
+                    editingUserId={editingUserId} 
+                    setEditingUserId={setEditingUserId} 
+                />
             </section>
 
         </main>

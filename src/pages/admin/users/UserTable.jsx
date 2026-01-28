@@ -2,7 +2,7 @@ import Swal from "sweetalert2"
 import { deleteUser, getAllUsers, getUserById } from "../../../services/user.service"
 import { getLocations } from "../../../services/location.service"
 
-export const UserTable = ({ users, setUsers, setFormData }) => {
+export const UserTable = ({ users, setUsers, setFormData, isEditing, setIsEditing, editingUserId, setEditingUserId }) => {
 
     const deleteUserHandle = async (id) => {
         try {
@@ -36,10 +36,7 @@ export const UserTable = ({ users, setUsers, setFormData }) => {
     const findUserByIdHandler = async (id) => {
         const response = await getUserById(id)
         const locations = await getLocations()
-        const comuna = locations.comunas.find(comuna => comuna.id === response.comunaId)
-
-        console.log(comuna)
-        
+        const comuna = locations.comunas.find(comuna => comuna.id === response.comunaId)    
         setFormData(
             {
                 run: response.run,
@@ -55,7 +52,8 @@ export const UserTable = ({ users, setUsers, setFormData }) => {
                 confirmPassword: ""
             }
         )
-
+        setEditingUserId(id)
+        setIsEditing(true)
     }
 
     return (

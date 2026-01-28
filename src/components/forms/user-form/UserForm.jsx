@@ -4,9 +4,9 @@ import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
 import { getLocations } from "../../../services/location.service"
 import { getAllRoles } from "../../../services/role.service"
-import { createUser, getAllUsers } from "../../../services/user.service"
+import { createUser, editUser, getAllUsers } from "../../../services/user.service"
 
-export const UserForm = ({ setUser, formData, setFormData }) => {
+export const UserForm = ({ setUser, formData, setFormData, isEditing, setIsEditing, editingUserId, setEditingUserId }) => {
 
     const [regionId, setRegionId] = useState(null)
 
@@ -69,31 +69,51 @@ export const UserForm = ({ setUser, formData, setFormData }) => {
 
         try {
 
-            await createUser({
-                run: formData.run,
-                name: formData.name,
-                lastname: formData.lastName,
-                email: formData.email,
-                birthday: formData.birthday,
-                password: formData.password,
-                addres: formData.addres,
-                comunaId: parseInt(formData.comuna)
-            })
+            if (isEditing) {
+                console.log("Editando usuario", editingUserId)
+                await editUser(editingUserId, {
+                    run: formData.run,
+                    name: formData.name,
+                    lastname: formData.lastName,
+                    email: formData.email,
+                    birthday: formData.birthday,
+                    password: formData.password,
+                    addres: formData.addres,
+                    comunaId: parseInt(formData.comuna),
+                    role: formData.userType
+                })
+            } else {
+                await createUser({
+                    run: formData.run,
+                    name: formData.name,
+                    lastname: formData.lastName,
+                    email: formData.email,
+                    birthday: formData.birthday,
+                    password: formData.password,
+                    addres: formData.addres,
+                    comunaId: parseInt(formData.comuna),
+                    role:formData.userType
+                })
+            }
 
             const users = await getAllUsers()
             setUser(users)
 
             Swal.fire({
                 title: "Éxito",
-                text: "Usuario creado correctamente",
+                text: "Cambios guardados correctamente",
                 icon: "success",
                 timer: 3000,
                 showConfirmButton: false
             }).then(() => {
                 setFormData({})
                 setErrors({})
+                setIsEditing(false)
+                setEditingUserId(null)
                 formRef.current.reset()
             })
+
+
 
         } catch (error) {
             console.error(error)
@@ -173,10 +193,22 @@ export const UserForm = ({ setUser, formData, setFormData }) => {
                 )
             }
 
-            <div className="mb-3 col-lg-12">
+            <div className="mb-3 col-lg-12 d-flex gap-2">
                 <button type="submit" className="btn btn-dark" disabled={loading}>
-                    {loading ? "Registrando..." : "Guardar Cambios"}
+                    {loading ? "Guardando..." : "Guardar Cambios"}
                 </button>
+                {
+                    isEditing && (
+                        <button type="button" className="btn btn-danger" disabled={loading} onClick={() => {
+                            setFormData({})
+                            setIsEditing(false)
+                            setEditingUserId(null)
+
+                        }}>
+                            Cancelar Edición
+                        </button>
+                    )
+                }
             </div>
         </form>
     )

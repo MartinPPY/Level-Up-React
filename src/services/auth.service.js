@@ -17,5 +17,9 @@ export const isAuthenticated = async () => {
 export const registerUser = async(user)=>{
     const response = await api.post("/auth/register",user)
     return response.data
+}
 
+export const isAdmin = async ()=>{
+    const response = await api.get("/auth/isadmin")
+    return response.data
 }
