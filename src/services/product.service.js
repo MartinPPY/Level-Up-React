@@ -5,3 +5,12 @@ export const getAllProducts = async () => {
     return response.data
 }
 
+export const createProduct = async (product) => {
+    const response = await api.post("/productos", product)
+    return response.data
+}
+
+export const deleteProduct = async (code) => {
+    const response = await api.delete(`/productos/${code}`)
+    return response.data
+}

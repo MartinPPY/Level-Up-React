@@ -27,7 +27,7 @@ export const Products = () => {
             <div className="row card p-2 mb-3">
                 <h3>Agregar Producto</h3>
                 <p>Ingresa los datos del producto</p>
-                <AddProducts />
+                <AddProducts setProductos={setProductos}  />
             </div>
 
             <div className="row card p-2">

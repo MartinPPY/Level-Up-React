@@ -1,4 +1,41 @@
+import Swal from "sweetalert2"
+import { deleteProduct, getAllProducts } from "../../../services/product.service"
+
 export const ProductTable = ({ productos }) => {
+
+    const deleteHandle = async (id) => {
+
+        Swal.fire({
+            icon: "warning",
+            title: "¿Estas seguro de eliminar este usuario?",
+            text: "No podrás revertir esta acción",
+            showCancelButton: true,
+            confirmButtonText: "Eliminar",
+            cancelButtonText: "Cancelar"
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await deleteProduct(id)
+                Swal.fire({
+                    icon: "success",
+                    title: "Producto eliminado correctamente",
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(async () => {
+                    const productos = await getAllProductss()
+                })
+            }
+        })
+
+        try {
+
+        } catch (error) {
+            console.error(error)
+        } finally {
+
+        }
+
+    }
+
     return (
         <div className="col-12 p-3">
             <div className="table-responsive">

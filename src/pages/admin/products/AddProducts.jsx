@@ -1,9 +1,9 @@
 import { ProductForm } from "../../../components/forms/products-form/ProductForm"
 
-export const AddProducts = () => {
+export const AddProducts = ({setProductos}) => {
     return (
         <>
-            <ProductForm />
+            <ProductForm setProductos={setProductos} />
         </>
     )
 }
