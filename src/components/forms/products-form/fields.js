@@ -1,4 +1,6 @@
-export const getFields = () => {
+export const getFields = (
+    categories
+) => {
     return [
         {
             id: "codigo",
@@ -41,8 +43,8 @@ export const getFields = () => {
             value: 0,
             step: 1
         }, {
-            id: "stock-critico (Opcional)",
-            label: "Stock Crítico",
+            id: "stockCritico",
+            label: "Stock Crítico (Opcional)",
             type: "number",
             placeholder: "Stock crítico del producto",
             required: false,
@@ -54,9 +56,10 @@ export const getFields = () => {
             type: "select",
             options: [
                 { value: "", label: "Seleccione una categoría" },
-                { value: "1", label: "Juegos de Mesa" },
-                { value: "2", label: "Accesorios" },
-                { value: "3", label: "Videojuegos" },
+                ...categories.map(cat => ({
+                    value: cat.id, 
+                    label: cat.name
+                }))
             ],
             required: true
         },

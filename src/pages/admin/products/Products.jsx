@@ -6,6 +6,18 @@ import { getAllProducts } from "../../../services/product.service"
 export const Products = () => {
 
     const [productos, setProductos] = useState([])
+    const [isEditing, setIsEditing] = useState(false)
+    const [editingProductCode, setEditingProductCode] = useState(null)
+    const [formData, setFormData] = useState({
+        codigo: "",
+        nombre: "",
+        descripcion: "",
+        precio: "",
+        stock: "",
+        stockCritico: "",
+        categoria: "",
+        imagen: ""
+    })
 
     useEffect(() => {
         const getAllProductos = async () => {
@@ -27,11 +39,29 @@ export const Products = () => {
             <div className="row card p-2 mb-3">
                 <h3>Agregar Producto</h3>
                 <p>Ingresa los datos del producto</p>
-                <AddProducts setProductos={setProductos}  />
+                <AddProducts
+                    setProductos={setProductos}
+                    formData={formData}
+                    setFormData={setFormData}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    editingProductCode={editingProductCode}
+                    setEditingProductCode={setEditingProductCode}
+                />
+
             </div>
 
             <div className="row card p-2">
-                <ProductTable productos={productos} />
+                <ProductTable
+                    productos={productos}
+                    setProductos={setProductos}
+                    formData={formData}
+                    setFormData={setFormData}
+                    isEditing={isEditing}
+                    setIsEditing={setIsEditing}
+                    setEditingProductCode={setEditingProductCode}
+
+                />
             </div>
         </main>
     )

@@ -1,22 +1,39 @@
 import { getFields } from "./fields"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { validateForm } from "./validaciones"
 import Swal from "sweetalert2"
-import { createProduct, getAllProducts } from "../../../services/product.service"
+import { createProduct, getAllProducts, updateProduct } from "../../../services/product.service"
+import { getAllCategories } from "../../../services/category.service"
 
-export const ProductForm = ({setProductos}) => {
+export const ProductForm = ({ setProductos, formData, setFormData, editingProductCode, setEditingProductCode, setIsEditing, isEditing }) => {
 
-  const [formData, setFormData] = useState({})
+
   const [errors, setErrors] = useState({})
   const [loading, setLoading] = useState(false)
+  const [categories, setCategories] = useState([])
   const formRef = useRef(null)
 
+  useEffect(() => {
 
-  const fields = getFields({setProductos})
+    const getCategorias = async () => {
+      const response = await getAllCategories()
+      setCategories(response)
+    }
 
+    getCategorias()
+
+  }, [])
+
+  const fields = getFields(
+    categories
+  )
+
+  console.log(editingProductCode)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    console.log(formData)
 
     const errors = validateForm(formData)
     if (Object.keys(errors).length > 0) {
@@ -29,45 +46,60 @@ export const ProductForm = ({setProductos}) => {
       return
     }
 
+
+
     try {
       setLoading(true)
 
-      await createProduct({
-        code: formData.codigo,
-        name: formData.nombre,
-        description: formData.descripcion,
-        precio: formData.precio,
-        stock: formData.stock,
-        stockCritico: formData.stockCritico,
-        image: formData.image,
-        category: formData.categoria
-      })
+      if (!isEditing) {
+        await createProduct({
+          code: formData.codigo,
+          name: formData.nombre,
+          description: formData.descripcion,
+          precio: formData.precio,
+          stock: formData.stock,
+          stockCritico: formData.stockCritico,
+          image: formData.image,
+          category: formData.categoria
+        })
 
-      Swal.fire({
-        icon: 'success',
-        title: 'Exito',
-        text: 'El producto se agrego correctamente',
-        showConfirmButton: false,
-        timer: 1500
-      }).then( async () => {
-        setFormData({})
-        setErrors({})
-        formRef.current.reset()
+        Swal.fire("Exito", "Producto guardado correctamente", "success").then(async () => {
+          setEditingProductCode(null)
+          const productos = await getAllProducts()
+          setProductos(productos)
+          setLoading(false)
 
-        const productos = await getAllProducts()
-        setProductos(productos)
+        })
+      } else {
+        await updateProduct(editingProductCode, {
+          code: formData.codigo,
+          name: formData.nombre,
+          description: formData.descripcion,
+          precio: formData.precio,
+          stock: formData.stock,
+          stockCritico: formData.stockCritico,
+          image: formData.image,
+          category: formData.categoria
+        })
+        Swal.fire("Exito", "Producto editado correctamente", "success").then(async () => {
+          setEditingProductCode(null)
+          const productos = await getAllProducts()
+          setProductos(productos)
+          setLoading(false)
 
-      })
+        })
+
+      }
+
+
+
 
     } catch (error) {
       console.error(error)
-      Swal.fire("Error","No se ha podido registrar el producto","error")
-
+      Swal.fire("Error", "No se ha podido registrar el producto", "error")
     } finally {
-      setLoading(false)
-
-
-
+      setFormData({})
+      setIsEditing(false)
     }
 
   }
@@ -81,7 +113,7 @@ export const ProductForm = ({setProductos}) => {
               {field.label}
               {field.required && <span className="text-danger">*</span>}
             </label>
-            <select id={field.id} className="form-select" value={formData[field.id]} onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}>
+            <select id={field.id} className="form-select" value={formData[field.id] ?? ""} onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })}>
               {field.options.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
@@ -95,7 +127,7 @@ export const ProductForm = ({setProductos}) => {
               {field.label}
               {field.required && <span className="text-danger">*</span>}
             </label>
-            <input type={field.type} id={field.id} required={field.required} onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })} className="form-control" />
+            <input type={field.type} id={field.id} required={field.required} value={formData[field.id] ?? ""} onChange={(e) => setFormData({ ...formData, [field.id]: e.target.value })} className="form-control" />
           </div>
         )
       ))}
@@ -113,8 +145,15 @@ export const ProductForm = ({setProductos}) => {
 
 
 
-      <div className="col-lg-12">
-        <button type="submit" className="btn btn-dark" disabled={loading}>{loading ? "Cargando..." : "Agregar Producto"}</button>
+      <div className="col-lg-12 d-flex gap-2">
+        <button type="submit" className="btn btn-dark" disabled={loading}>{loading ? "Cargando..." : "Guardar Cambios"}</button>
+        {
+          isEditing && <button type="button" className="btn btn-danger" onClick={() => {
+            setIsEditing(false)
+            setFormData({})
+          }} >Cancelar</button>
+        }
+
       </div>
     </form >
   )

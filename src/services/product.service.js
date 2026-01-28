@@ -14,3 +14,13 @@ export const deleteProduct = async (code) => {
     const response = await api.delete(`/productos/${code}`)
     return response.data
 }
+
+export const getProductByCode = async (code) => {
+    const response = await api.get(`/productos/${code}`)
+    return response.data
+}
+
+export const updateProduct = async (code, product) => {
+    const response = await api.put(`/productos/${code}`, product)
+    return response.data
+}

@@ -22,7 +22,7 @@ export const validateForm = (formData) => {
     }
     
     //Validar categoria
-    if (!formData.categoria || formData.categoria.trim() === "") {
+    if (!formData.categoria) {
         errors.categoria = "La categoria es requerida";
     }
     

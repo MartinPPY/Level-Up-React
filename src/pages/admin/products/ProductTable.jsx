@@ -1,37 +1,59 @@
 import Swal from "sweetalert2"
-import { deleteProduct, getAllProducts } from "../../../services/product.service"
+import { deleteProduct, getAllProducts, getProductByCode } from "../../../services/product.service"
 
-export const ProductTable = ({ productos }) => {
+export const ProductTable = ({ productos, setProductos, setFormData, setIsEditing, setEditingProductCode }) => {
 
     const deleteHandle = async (id) => {
 
-        Swal.fire({
-            icon: "warning",
-            title: "¿Estas seguro de eliminar este usuario?",
-            text: "No podrás revertir esta acción",
-            showCancelButton: true,
-            confirmButtonText: "Eliminar",
-            cancelButtonText: "Cancelar"
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                await deleteProduct(id)
-                Swal.fire({
-                    icon: "success",
-                    title: "Producto eliminado correctamente",
-                    showConfirmButton: false,
-                    timer: 2000
-                }).then(async () => {
-                    const productos = await getAllProductss()
-                })
-            }
-        })
-
         try {
+
+            Swal.fire({
+                icon: "warning",
+                title: "¿Estas seguro de eliminar este usuario?",
+                text: "No podrás revertir esta acción",
+                showCancelButton: true,
+                confirmButtonText: "Eliminar",
+                cancelButtonText: "Cancelar"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await deleteProduct(id)
+                    Swal.fire({
+                        icon: "success",
+                        title: "Producto eliminado correctamente",
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then(async () => {
+                        const productos = await getAllProducts()
+                        setProductos(productos)
+                    })
+                }
+            })
 
         } catch (error) {
             console.error(error)
-        } finally {
+        }
+    }
 
+    const updateHandle = async (code) => {
+        try {
+            const product = await getProductByCode(code)
+
+            setFormData({
+                codigo: product.code,
+                nombre: product.name,
+                descripcion: product.description,
+                precio: product.precio,
+                stock: product.stock,
+                stockCritico: product.stockCritico,
+                categoria: product.category,
+                imagen: ""
+            })
+
+            setIsEditing(true)
+            setEditingProductCode(code)
+
+        } catch (error) {
+            console.error(error)
         }
 
     }
@@ -56,8 +78,8 @@ export const ProductTable = ({ productos }) => {
                                     <td>{producto.name}</td>
                                     <td>{Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(producto.precio)}</td>
                                     <td className="d-flex gap-3">
-                                        <button className="btn btn-sm btn-dark" >Editar</button>
-                                        <button className="btn btn-sm btn-danger" >Eliminar</button>
+                                        <button className="btn btn-sm btn-dark" onClick={() => updateHandle(producto.code)} >Editar</button>
+                                        <button className="btn btn-sm btn-danger" onClick={() => deleteHandle(producto.code)} >Eliminar</button>
                                     </td>
                                 </tr>
                             ))
