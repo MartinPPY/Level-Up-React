@@ -7,7 +7,7 @@ export const getFields = ({
 }) => [
         {
             id: "run",
-            label: "Rut (Sin guión ni dígito verificador)",
+            label: "Rut (Sin guión y con dígito verificador)",
             type: "text",
             placeholder: "Ej: 12345678K",
             minLength: 7,

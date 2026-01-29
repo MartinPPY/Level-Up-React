@@ -9,7 +9,7 @@ export const AdminGuard = () => {
   useEffect(() => {
     const getIsAdmin = async () => {
       try {
-        const response = await isAdmin()
+        const response = await isAdmin()  
         setAdmin(response[0]?.authority === "ROLE_ADMIN" || response[0]?.authority === "ROLE_VENDEDOR")
       } catch (error) {
         setAdmin(false)
