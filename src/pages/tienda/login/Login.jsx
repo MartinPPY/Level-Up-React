@@ -35,7 +35,7 @@ export const Login = () => {
             const data  = await login(email,password)            
             localStorage.setItem("token",data.token)
             setAuthenticated(true)
-            if(data.roles[0].authority === "ROLE_ADMIN"){
+            if(data.roles[0].authority === "ROLE_ADMIN" || data.roles[0].authority === "ROLE_VENDEDOR"){
                 navigate("/admin")
             }else{
                 navigate("/tienda")

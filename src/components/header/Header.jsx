@@ -2,13 +2,31 @@ import { Gamepad2, ShoppingCart } from "lucide-react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useCart } from "../../context/CartContext"
 import { useAuth } from "../../context/AuthContext"
+import { useEffect, useState } from "react"
+import { isAdmin } from "../../services/auth.service"
 
 
 export const Header = () => {
 
+    const [admin, setAdmin] = useState(false)
     const { cart } = useCart()
     const { authenticated, setAuthenticated } = useAuth()
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const checkAdmin = async () => {
+            try {
+                const admin = await isAdmin()
+                setAdmin(admin[0]?.authority === "ROLE_ADMIN")
+            } catch (error) {
+                setAdmin(false)
+            }
+        }
+        checkAdmin()
+
+    }, [authenticated])
+
+
 
 
 
@@ -54,13 +72,19 @@ export const Header = () => {
                         {
                             authenticated ? (
                                 <>
-                                    <Link className="position-relative text-white" to="/tienda/cart"
-                                        aria-controls="cart">
-                                        <ShoppingCart />
-                                        <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {cart.reduce((total, item) => total + item.cantidad, 0)}
-                                        </span>
-                                    </Link>
+                                    {
+                                        admin ?
+                                            <Link className="btn btn-sm btn-outline-info" to="/admin">
+                                                Admin
+                                            </Link>
+                                            : <Link className="position-relative text-white" to="/tienda/cart"
+                                                aria-controls="cart">
+                                                <ShoppingCart />
+                                                <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                    {cart.reduce((total, item) => total + item.cantidad, 0)}
+                                                </span>
+                                            </Link>
+                                    }
                                     <button className="tienda btn btn-sm btn-outline-danger" onClick={logOut}>Cerrar sesión</button>
                                 </>
 

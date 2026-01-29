@@ -1,66 +1,124 @@
 import Swal from "sweetalert2"
 import { useCart } from "../../../context/CartContext"
-import { productos } from "../../../data/data"
 import { useToast } from '../../../context/ToastContext'
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../../context/AuthContext"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import { isAuthenticated } from "../../../services/auth.service"
+import { createVenta } from "../../../services/venta.service"
 
 export const Cart = () => {
+
+    const [loading, setLoading] = useState(false)
 
     const { setCart, cart } = useCart()
     const { showToast } = useToast()
     const { authenticated } = useAuth()
+
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!authenticated) {
+            setCart([])
             navigate("/tienda/login")
+
         }
 
     }, [])
 
     const addToCart = (codigo) => {
-        const producto = productos.find((p) => p.codigo === codigo)
-        if (!producto) return
+        if (!authenticated) {
+            navigate("/tienda/login")
+            return
+        }
 
-        setCart(prevCart =>
-            prevCart.some(item => item.codigo === codigo)
-                ? prevCart.map(item =>
-                    item.codigo === codigo
-                        ? { ...item, cantidad: item.cantidad + 1 }
-                        : item
-                )
-                : [...prevCart, { ...producto, cantidad: 1 }]
-        )
+        for (let item of cart) {
+            if (codigo === item.code) {
+                if (item.stock === 0) {
+                    showToast('Producto agotado', 'info')
+                    return
+                }
+                item.cantidad++
+                item.stock -= 1
+                setCart([...cart])
+                showToast(`Producto ${item.name} añadido al carrito`, 'info')
+                return
+            }
+
+        }
+
     }
 
     const delToCart = (codigo) => {
-        setCart(prevCart =>
-            prevCart
-                .map(item =>
-                    item.codigo === codigo
-                        ? { ...item, cantidad: item.cantidad - 1 }
-                        : item
-                )
-                .filter(item => item.cantidad > 0)
-        )
+        if (!authenticated) {
+            navigate("/tienda/login")
+            return
+        }
+
+        for (let item of cart) {
+            if (codigo === item.code) {
+                if (item.cantidad === 1) {
+                    setCart(cart.filter(item => item.code !== codigo))
+                    showToast(`Producto ${item.name} eliminado del carrito`, 'info')
+                    return
+                }
+                item.cantidad--
+                item.stock += 1
+                setCart([...cart])
+                showToast(`Producto ${item.name} eliminado del carrito`, 'info')
+                return
+            }
+        }
+
+
     }
 
     const clearCart = () => {
-
         setCart([])
         showToast('Carrito vaciado', 'success')
     }
 
-    const comprar = () => {
-        Swal.fire({
-            title: 'Compra realizada',
-            text: 'Tu compra ha sido realizada correctamente',
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-        })
-        setCart([])
+    const comprar = async () => {
+        if (!authenticated) {
+            navigate("/tienda/login")
+            return
+        }
+
+        try {
+            setLoading(true)
+
+            const email = await isAuthenticated()
+            const venta = [
+                ...cart.map(item => ({
+                    code: item.code,
+                    precio: item.precio,
+                    cantidad: item.cantidad,
+                    email: email
+                }))
+            ]
+
+            const response = await createVenta(venta)
+            Swal.fire({
+                title: 'Compra realizada',
+                text: 'Tu compra ha sido realizada correctamente',
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            })
+            setCart([])
+            navigate("/tienda")
+
+
+        } catch (error) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Hubo un error al procesar la compra',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            })
+        } finally {
+            setLoading(false)
+        }
+
     }
 
     return (
@@ -77,16 +135,16 @@ export const Cart = () => {
                                     </div>
                                     <div className="col-md-5">
                                         <div className="card-body">
-                                            <h5 className="card-title mb-1">{item.nombre}</h5>
-                                            <p className="card-text text-white">{item.categoria}</p>
+                                            <h5 className="card-title mb-1">{item.name}</h5>
+                                            <p className="card-text text-white">{item.category.name}</p>
                                             <p className="card-text text-white">{item.precio.toLocaleString('es-CL')} CLP</p>
                                         </div>
                                     </div>
                                     <div className="col-md-4 text-center">
                                         <div className="d-flex justify-content-center align-items-center">
-                                            <button className="btn btn-outline-secondary btn-sm" onClick={() => delToCart(item.codigo)}>−</button>
+                                            <button className="btn btn-outline-secondary btn-sm" onClick={() => delToCart(item.code)}>−</button>
                                             <span className="mx-3 cantidad">{item.cantidad}</span>
-                                            <button className="btn btn-outline-secondary btn-sm" onClick={() => addToCart(item.codigo)}>+</button>
+                                            <button className="btn btn-outline-secondary btn-sm" onClick={() => addToCart(item.code)}>+</button>
                                         </div>
                                     </div>
                                 </div>
@@ -103,27 +161,15 @@ export const Cart = () => {
                             <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad), 0).toLocaleString('es-CL')} CLP</h5>
                         </div>
                         <div className="d-flex justify-content-around">
-                            <h5>Descuento:</h5>
-                            <h5>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.2), 0).toLocaleString('es-CL')} CLP</h5>
-                        </div>
-                        <div className="d-flex justify-content-around">
                             <h3>Total:</h3>
-                            <h3>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad * 0.8), 0).toLocaleString('es-CL')} CLP</h3>
+                            <h3>{cart.reduce((acc, item) => (acc + item.precio * item.cantidad), 0).toLocaleString('es-CL')} CLP</h3>
                         </div>
                     </div>
-
-                    <div className="d-flex flex-column gap-3">
-                        <fieldset className="d-flex flex-column">
-                            <label htmlFor="cupon" className="form-label"> Cupon de descuento </label>
-                            <input type="text" placeholder="Ingresa cupon" id="cupon" className="form-control" />
-                        </fieldset>
-                        <button className="btn btn-sm btn-warning"> Agregar cupon </button>
-                    </div>
-
-                    <p className="text-center text-warning"> Tienes un descuento del 20% </p>
 
                     <div className="d-flex flex-column gap-4 ">
-                        <button className="btn btn-info" onClick={comprar}> Comprar </button>
+                        <button className="btn btn-info" onClick={comprar} disabled={loading}>
+                            {loading ? 'Procesando...' : 'Comprar'}
+                        </button>
                         <button className="btn btn-sm btn-success" onClick={clearCart}> Vaciar carrito
                         </button>
                     </div>

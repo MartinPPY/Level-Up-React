@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom"
-import { productos } from "../../../data/data"
 import { useCart } from "../../../context/CartContext"
 import { useEffect, useState } from "react"
 import { useToast } from '../../../context/ToastContext'
@@ -20,16 +19,14 @@ export const ProductDetail = () => {
     useEffect(() => {
         const getProductDetails = async () => {
             const response = await getProductByCode(codigo)
-            setProducto(response)            
+            setProducto(response)
         }
 
         getProductDetails()
-    },[])
+    }, [])
 
-    const addToCart = (e) => {
+    const addToCart = async (e) => {
         e.preventDefault()
-        const producto = productos.find((p) => p.codigo === codigo)
-
 
         if (!producto) return
 
@@ -38,15 +35,24 @@ export const ProductDetail = () => {
             return
         }
 
-        setCart(prevCart =>
-            prevCart.some(item => item.codigo === codigo)
-                ? prevCart.map(item =>
-                    item.codigo === codigo
-                        ? { ...item, cantidad: parseInt(item.cantidad) + parseInt(quantity) }
-                        : item
-                )
-                : [...prevCart, { ...producto, cantidad: quantity }]
-        )
+        for (let item of cart) {
+            if (item.code === codigo) {
+
+                if (item.stock < parseInt(quantity)) {
+
+                    showToast('Stock insuficiente', 'info')
+                    return
+                }
+                item.cantidad += parseInt(quantity)
+                item.stock -= parseInt(quantity)
+                setCart([...cart])
+                return
+            }
+        }
+
+        producto.cantidad = parseInt(quantity)
+        producto.stock -= parseInt(quantity)
+        setCart([...cart, producto])
 
         showToast("Producto agregado al carrito", "success")
 

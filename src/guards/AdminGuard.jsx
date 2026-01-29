@@ -10,7 +10,7 @@ export const AdminGuard = () => {
     const getIsAdmin = async () => {
       try {
         const response = await isAdmin()
-        setAdmin(response[0]?.authority === "ROLE_ADMIN")
+        setAdmin(response[0]?.authority === "ROLE_ADMIN" || response[0]?.authority === "ROLE_VENDEDOR")
       } catch (error) {
         setAdmin(false)
       } finally {

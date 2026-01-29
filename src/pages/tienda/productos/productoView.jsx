@@ -4,10 +4,10 @@ import { useToast } from "../../../context/ToastContext";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { getAllCategories } from "../../../services/category.service";
-import { getAllProducts } from "../../../services/product.service";
+import { getAllProducts, getProductByCode } from "../../../services/product.service";
 
-export const ProductoView = ({productos}) => {
-    const { setCart } = useCart();
+export const ProductoView = ({ productos }) => {
+    const { setCart,cart } = useCart();
     const { showToast } = useToast();
     const { authenticated } = useAuth()
     const navigate = useNavigate()
@@ -23,23 +23,46 @@ export const ProductoView = ({productos}) => {
         getAllCategorias()
     }, [])
 
-    const addToCart = (code) => {
+    const addToCart = async (code) => {
         if (!authenticated) {
             navigate("/tienda/login")
             return
         }
-        const producto = productos.find(p => p.code === code);
-        if (!producto) return;
 
-        setCart(prevCart =>
-            prevCart.some(item => item.code === code)
-                ? prevCart.map(item =>
-                    item.code === code
-                        ? { ...item, cantidad: item.cantidad + 1 }
-                        : item
-                )
-                : [...prevCart, { ...producto, cantidad: 1 }]
-        );
+        try {
+            const producto = await getProductByCode(code)
+
+            if (producto.stock === 0) {
+                showToast('Producto agotado', 'info')
+                return
+            }
+
+            for (let item of cart) {
+                if (producto.code === item.code) {
+                    if (item.stock === 0) {
+                        showToast('Producto agotado', 'info')
+                        return
+                    }
+                    item.cantidad++
+                    item.stock -= 1
+                    setCart([...cart])
+                    showToast(`Producto ${producto.name} añadido al carrito`, 'info')
+                    return
+                }
+
+            }
+
+            producto.cantidad = 1
+            producto.stock -= 1
+
+            setCart([...cart, producto])
+
+            showToast(`Producto ${producto.name} añadido al carrito`, 'info')
+
+        } catch (error) {
+            console.error(error)
+        }
+
 
         showToast("Producto agregado al carrito", "success");
     };

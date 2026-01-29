@@ -1,12 +1,12 @@
 import { Link, NavLink } from "react-router-dom"
 
-export const Header = () => {
+export const Header = ({ role }) => {
 
     const menus = [
-        { name: 'Dashboard', href: '/admin/dashboard' },
-        { name: 'Usuarios', href: '/admin/users' },
-        { name: 'Productos', href: '/admin/products' },
-        { name: 'Ventas', href: '/admin/sales' }
+        { visible: true, name: 'Dashboard', href: '/admin/dashboard' },
+        { visible: role === 'ROLE_ADMIN', name: 'Usuarios', href: '/admin/users' },
+        { visible: role === 'ROLE_ADMIN' || role === 'ROLE_VENDEDOR', name: 'Productos', href: '/admin/products' },
+        { visible: role === 'ROLE_ADMIN' || role === 'ROLE_VENDEDOR', name: 'Ventas', href: '/admin/sales' }
     ]
 
     return (
@@ -22,12 +22,14 @@ export const Header = () => {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
                             {menus.map((menu) => (
+                                menu.visible && (
                                 <NavLink className={({ isActive }) =>
                                     isActive ? 'nav-link active' : 'nav-link'
                                 }
                                     to={menu.href} key={menu.href} >
                                     {menu.name}
                                 </NavLink>
+                                )
                             ))}
                             <Link className="nav-link" to="/tienda/home">Volver a la tienda</Link>
                         </div>

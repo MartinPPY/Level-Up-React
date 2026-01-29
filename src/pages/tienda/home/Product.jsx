@@ -23,18 +23,32 @@ export const Product = ({ productos }) => {
         try {
             const producto = await getProductByCode(codigo)
 
-            setCart(prevCart =>
-                prevCart.some(item => item.code === code)
-                    ? prevCart.map(item =>
-                        item.code === code
-                            ? { ...item, cantidad: item.cantidad + 1 }
-                            : item
-                    )
-                    : [...prevCart, { ...producto, cantidad: 1 }]
-            )
+            if (producto.stock === 0) {
+                showToast('Producto agotado', 'info')
+                return
+            }
 
-            showToast(`Producto ${producto.nombre} añadido al carrito`, 'info')
+            for (let item of cart) {
+                if (producto.code === item.code) {
+                    if (item.stock === 0) {
+                        showToast('Producto agotado', 'info')
+                        return
+                    }
+                    item.cantidad++
+                    item.stock -= 1
+                    setCart([...cart])
+                    showToast(`Producto ${producto.name} añadido al carrito`, 'info')
+                    return
+                }
 
+            }
+
+            producto.cantidad = 1
+            producto.stock -= 1
+
+            setCart([...cart, producto])
+
+            showToast(`Producto ${producto.name} añadido al carrito`, 'info')
 
         } catch (error) {
             console.error(error)

@@ -28,7 +28,6 @@ export const ProductForm = ({ setProductos, formData, setFormData, editingProduc
     categories
   )
 
-  console.log(editingProductCode)
 
   const handleSubmit = async (e) => {
     e.preventDefault()

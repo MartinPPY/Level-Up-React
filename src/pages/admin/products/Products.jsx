@@ -3,7 +3,7 @@ import { AddProducts } from "./AddProducts"
 import { ProductTable } from "./ProductTable"
 import { getAllProducts } from "../../../services/product.service"
 
-export const Products = () => {
+export const Products = ({ role }) => {
 
     const [productos, setProductos] = useState([])
     const [isEditing, setIsEditing] = useState(false)
@@ -36,20 +36,24 @@ export const Products = () => {
                 </div>
             </div>
 
-            <div className="row card p-2 mb-3">
-                <h3>Agregar Producto</h3>
-                <p>Ingresa los datos del producto</p>
-                <AddProducts
-                    setProductos={setProductos}
-                    formData={formData}
-                    setFormData={setFormData}
-                    isEditing={isEditing}
-                    setIsEditing={setIsEditing}
-                    editingProductCode={editingProductCode}
-                    setEditingProductCode={setEditingProductCode}
-                />
+            {
+                (role === 'ROLE_ADMIN') && (
+                    <div className="row card p-2 mb-3">
+                        <h3>Agregar Producto</h3>
+                        <p>Ingresa los datos del producto</p>
+                        <AddProducts
+                            setProductos={setProductos}
+                            formData={formData}
+                            setFormData={setFormData}
+                            isEditing={isEditing}
+                            setIsEditing={setIsEditing}
+                            editingProductCode={editingProductCode}
+                            setEditingProductCode={setEditingProductCode}
+                        />
 
-            </div>
+                    </div>
+                )
+            }
 
             <div className="row card p-2">
                 <ProductTable
@@ -60,6 +64,7 @@ export const Products = () => {
                     isEditing={isEditing}
                     setIsEditing={setIsEditing}
                     setEditingProductCode={setEditingProductCode}
+                    role={role}
 
                 />
             </div>

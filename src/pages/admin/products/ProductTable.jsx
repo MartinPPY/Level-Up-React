@@ -1,7 +1,7 @@
 import Swal from "sweetalert2"
 import { deleteProduct, getAllProducts, getProductByCode } from "../../../services/product.service"
 
-export const ProductTable = ({ productos, setProductos, setFormData, setIsEditing, setEditingProductCode }) => {
+export const ProductTable = ({ productos, setProductos, setFormData, setIsEditing, setEditingProductCode, role }) => {
 
     const deleteHandle = async (id) => {
 
@@ -67,7 +67,7 @@ export const ProductTable = ({ productos, setProductos, setFormData, setIsEditin
                             <th scope="col">Codigo</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Precio</th>
-                            <th scope="col">Acciones</th>
+                            {role === 'ROLE_ADMIN' && <th scope="col">Acciones</th>}
                         </tr>
                     </thead>
                     <tbody>
@@ -78,8 +78,12 @@ export const ProductTable = ({ productos, setProductos, setFormData, setIsEditin
                                     <td>{producto.name}</td>
                                     <td>{Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(producto.precio)}</td>
                                     <td className="d-flex gap-3">
-                                        <button className="btn btn-sm btn-dark" onClick={() => updateHandle(producto.code)} >Editar</button>
-                                        <button className="btn btn-sm btn-danger" onClick={() => deleteHandle(producto.code)} >Eliminar</button>
+                                        {role === 'ROLE_ADMIN' && (
+                                            <>
+                                                <button className="btn btn-sm btn-dark" onClick={() => updateHandle(producto.code)} >Editar</button>
+                                                <button className="btn btn-sm btn-danger" onClick={() => deleteHandle(producto.code)} >Eliminar</button>
+                                            </>
+                                        )}
                                     </td>
                                 </tr>
                             ))
