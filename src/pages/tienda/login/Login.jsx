@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../services/auth.service";
 import { useAuth } from "../../../context/AuthContext";
+import { LucideMessageCircleWarning } from "lucide-react";
 
 export const Login = () => {
 
@@ -41,7 +42,11 @@ export const Login = () => {
                 navigate("/tienda")
             }
         } catch (error) {
-            console.error(error)
+            Swal.fire({
+                title: "Error",
+                text: "Correo o contraseña incorrectos",
+                icon: "error"
+            })
         } finally {
             setLoading(false)
         }
@@ -82,7 +87,7 @@ export const Login = () => {
                         }
 
                         <div className="bg-warning p-2 mb-3 rounded">
-                            <h4 className="text-dark">⚠️ Datos de prueba</h4>
+                            <h4 className="text-dark"><LucideMessageCircleWarning/> Datos de prueba</h4>
                             <p className="text-dark">Usuario: <strong>admin@gmail.com</strong></p>
                             <p className="text-dark">Contraseña: <strong>admin</strong></p>
                         </div>
