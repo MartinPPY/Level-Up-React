@@ -2,6 +2,7 @@ import { useState } from "react"
 import Swal from "sweetalert2"
 import { Mail, MapPin, Phone } from "lucide-react"
 import { useForm } from "react-hook-form"
+import { Spinner} from "react-bootstrap"
 
 export const Contacto = () => {
 
@@ -122,7 +123,7 @@ export const Contacto = () => {
                         <button 
                             type="submit" 
                             className="btn btn-primary" 
-                            disabled={loading}> {loading ? "Enviando..." : "Enviar mensaje"}
+                            disabled={loading}> {loading ? <> <Spinner animation="border"  size="sm" /> Enviando... </> : "Enviar mensaje"}
                         </button>
                     </form>
                 </div>
