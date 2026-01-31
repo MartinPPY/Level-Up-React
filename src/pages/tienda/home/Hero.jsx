@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import image1 from "../../../assets/images/carrusel/1.png";
 import image2 from "../../../assets/images/carrusel/2.png";
 import image3 from "../../../assets/images/carrusel/3.png";
+import { Carousel } from "react-bootstrap";
 
 export const Hero = () => {
     return (
@@ -26,19 +27,17 @@ export const Hero = () => {
                 </div>
 
                 <div className="col-lg-6">
-                    <div id="carouselHero" className="carousel slide rounded overflow-hidden" data-bs-ride="carousel">
-                        <div className="carousel-inner">
-                            <div className="carousel-item active" data-bs-interval="3000">
-                                <img src={image1} className="d-block w-100" alt="Juego destacado" />
-                            </div>
-                            <div className="carousel-item" data-bs-interval="3000">
-                                <img src={image2} className="d-block w-100" alt="Novedades" />
-                            </div>
-                            <div className="carousel-item" data-bs-interval="3000">
-                                <img src={image3} className="d-block w-100" alt="Ofertas" />
-                            </div>
-                        </div>
-                    </div>
+                    <Carousel pause={false} controls={false} indicators={false}>
+                        <Carousel.Item interval={2000}>
+                            <img src={image1} className="d-block w-100 rounded-3" alt="Juego destacado" width={1000} height={300} />
+                        </Carousel.Item>
+                        <Carousel.Item interval={2000}>
+                            <img src={image2} className="d-block w-100 rounded-3" alt="Novedades" width={1000} height={300} />
+                        </Carousel.Item>
+                        <Carousel.Item interval={2000}>
+                            <img src={image3} className="d-block w-100 rounded-3" alt="Ofertas" width={1000} height={300} />
+                        </Carousel.Item>
+                    </Carousel>
                 </div>
             </div>
         </section>

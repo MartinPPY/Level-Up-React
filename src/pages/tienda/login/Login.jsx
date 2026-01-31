@@ -1,4 +1,3 @@
-import Logo from "../../../assets/images/logo.jpeg"
 import { useState } from "react";
 import { validateForm } from "./validaciones";
 import Swal from "sweetalert2";
@@ -58,9 +57,6 @@ export const Login = () => {
     return (
         <main className="container-fluid p-4 bg-dark text-white">
             <div className="row d-flex align-items-center flex-column gap-2 justify-content-center">
-                <div className="col-lg-6 d-flex justify-content-center">
-                    <img src={Logo} alt="Logo" className="img-fluid" width="50%" />
-                </div>
                 <div className="col-lg-6">
                     <h2 className="text-center">Inicio de sesión</h2>
                     <p className="text-center">Ingresa tus datos para iniciar sesión</p>

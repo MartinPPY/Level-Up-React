@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { getAllCategories } from "../../../services/category.service";
 import { getAllProducts, getProductByCode } from "../../../services/product.service";
+import { Eye, ShoppingCartIcon } from "lucide-react";
 
 export const ProductoView = ({ productos }) => {
     const { setCart,cart } = useCart();
@@ -81,6 +82,7 @@ export const ProductoView = ({ productos }) => {
 
     return (
         <div className="container py-4">
+            <h1 className="text-white text-center mb-3">Nuestros productos</h1>
 
             <div className="row mb-4">
                 <div className="col-md-8 mb-2">
@@ -145,14 +147,14 @@ export const ProductoView = ({ productos }) => {
                                             onClick={() => addToCart(prod.code)}
                                         >
                                             <i className="bi bi-cart-plus me-2"></i>
-                                            Agregar al carrito
+                                            Agregar al carrito <ShoppingCartIcon className="me-2" />
                                         </button>
 
                                         <Link
                                             className="btn btn-outline-success btn-sm"
                                             to={`/tienda/producto-detalle/${prod.code}`}
                                         >
-                                            Ver descripción
+                                            Ver descripción <Eye className="me-2"/>
                                         </Link>
                                     </div>
                                 </div>

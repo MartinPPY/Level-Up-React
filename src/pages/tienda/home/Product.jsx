@@ -1,4 +1,4 @@
-import { Eye, ShoppingCart } from "lucide-react"
+import { Eye, ShoppingCart, ShoppingCartIcon } from "lucide-react"
 import { useCart } from "../../../context/CartContext"
 import { Link, useNavigate } from "react-router-dom"
 import { useToast } from "../../../context/ToastContext"
@@ -52,6 +52,7 @@ export const Product = ({ productos }) => {
 
         } catch (error) {
             console.error(error)
+            showToast('Error al añadir el producto', 'error')
         }
     }
 
@@ -63,43 +64,54 @@ export const Product = ({ productos }) => {
             </div>
 
             <div className="scroll">
-                <div className="row row-cols-1 row-cols-md-3 g-4">
+                <div className="row">
                     {
-                        productos.map((p, index) => (
-                            <div className="col" key={index}>
-                                <div className="card bg-black text-white h-100 border-secondary tienda-cart">
-                                    <img src={p.image} alt={p.name} className="card-img-top" />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{p.name}</h5>
-                                        <p className="card-text">{p.category.name}</p>
-                                    </div>
-                                    <div className="card-footer d-flex flex-column gap-2 border-secondary">
-                                        <div>
-                                            <span className="fw-bold text-info">
-                                                {new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP' }).format(p.precio)} CLP
-                                            </span>
-                                        </div>
-                                        <div className="d-flex gap-2 justify-content-between align-items-center">
-                                            <Link
-                                                className="btn btn-sm btn-outline-info"
-                                                to={`/tienda/producto-detalle/${p.code}`}
-                                            >
-                                                <Eye />
-                                                Ver detalle
-                                            </Link>
-                                            <button className="btn btn-sm btn-outline-light d-flex align-items-center gap-2" onClick={
-                                                () => addToCart(p.code)
-                                            }>
-                                                <ShoppingCart />
-                                                Añadir al carrito
-                                            </button>
+                        productos.length > 0 ? productos.map((p, index) => (
+                            <div className="col-lg-4 col-md-6 col-12 my-3" key={index}>
+                                <div className="card bg-dark text-white border-secondary h-100 shadow">
+                                    <img
+                                        src={p.image}
+                                        className="card-img-top p-2 rounded"
+                                        alt={p.nombre}
+                                        style={{ height: "200px", objectFit: "contain" }}
+                                    />
+
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="card-title text-info">
+                                            {p.name}
+                                        </h5>
+
+                                        <p className="card-text small text-secondary text-truncate">
+                                            {p.description}
+                                        </p>
+
+                                        <div className="mt-auto">
+                                            <p className="fw-bold fs-4">
+                                                ${p.precio.toLocaleString()}
+                                            </p>
+
+                                            <div className="d-grid gap-2">
+                                                <button
+                                                    className="btn btn-info"
+                                                    onClick={() => addToCart(p.code)}
+                                                >
+                                                    <i className="bi bi-cart-plus me-2"></i>
+                                                    Agregar al carrito <ShoppingCart className="me-2" />
+                                                </button>
+
+                                                <Link
+                                                    className="btn btn-outline-success btn-sm"
+                                                    to={`/tienda/producto-detalle/${p.code}`}
+                                                >
+                                                    Ver descripción <Eye className="me-2" />
+                                                </Link>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-                        ))
-                    }
+                        )) : <div className="col-12 text-center text-white">No hay productos disponibles</div>
+                    } 
 
                 </div>
             </div>

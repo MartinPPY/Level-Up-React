@@ -23,8 +23,12 @@ export const Tienda = () => {
     useEffect(() => {
 
         const getProdData = async () => {
-            const response = await getAllProducts()
-            setProductos(response)
+            try {
+                const response = await getAllProducts()
+                setProductos(response)
+            } catch (error) {
+
+            }
         }
 
         getProdData()
