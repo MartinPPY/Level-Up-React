@@ -8,11 +8,6 @@
     object-fit: cover;
 }
 
-.tienda-registro-placeholder::placeholder {
-    color: #fff;
-    opacity: 1;
-}
-
 .scroll {
     overflow-x: hidden;
     height: 700px;
@@ -36,10 +31,22 @@
 }
 
 .scroll::-webkit-scrollbar-thumb:hover {
-    background-color: #31d4f5;    
+    background-color: #31d4f5;
 }
 
 .scroll {
     scrollbar-width: thin;
     scrollbar-color: #0dcaf0 #212529;
+}
+
+.password-eye {
+    top: 50%;
+    right: 12px;
+    transform: translateY(-5%);
+    color: #555;
+    padding: 0;
+}
+
+.password-eye:hover {
+    color: #000;
 }

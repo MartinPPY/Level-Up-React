@@ -50,7 +50,7 @@ export const Header = () => {
         <header className="bg-dark border-bottom border-secondary sticky-top p-2">
             <nav className="navbar navbar-expand-lg navbar-dark container">
                 <Link to="/tienda" className="navbar-brand fw-bold fs-4">
-                    <Gamepad2 className="text-info" /> Level Up
+                    <Gamepad2 className="text-primary" /> Level Up
                 </Link>
 
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
@@ -90,8 +90,8 @@ export const Header = () => {
 
                             ) : (
                                 <>
-                                    <Link to="/tienda/login" className="tienda btn btn-sm btn-outline-info">Iniciar sesión</Link>
-                                    <Link to="/tienda/registro" className="tienda btn btn-sm btn-outline-success">Registrarse</Link>
+                                    <Link to="/tienda/login" className="tienda btn btn-sm btn-outline-primary">Iniciar sesión</Link>
+                                    <Link to="/tienda/registro" className="tienda btn btn-sm btn-outline-secondary">Registrarse</Link>
                                 </>
                             )
                         }

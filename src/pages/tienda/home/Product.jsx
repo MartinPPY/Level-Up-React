@@ -59,8 +59,8 @@ export const Product = ({ productos }) => {
     return (
         <section className="container py-5">
             <div className="text-center mb-5 text-white">
-                <h2 className="fw-bold">Productos destacados</h2>
-                <p>Una selección de nuestros productos más populares</p>
+                <h2 className="fw-bold">Nuestros Productos</h2>
+                
             </div>
 
             <div className="scroll">
@@ -92,15 +92,14 @@ export const Product = ({ productos }) => {
 
                                             <div className="d-grid gap-2">
                                                 <button
-                                                    className="btn btn-info"
+                                                    className="btn btn-primary"
                                                     onClick={() => addToCart(p.code)}
                                                 >
-                                                    <i className="bi bi-cart-plus me-2"></i>
                                                     Agregar al carrito <ShoppingCart className="me-2" />
                                                 </button>
 
                                                 <Link
-                                                    className="btn btn-outline-success btn-sm"
+                                                    className="btn btn-outline-secondary btn-sm"
                                                     to={`/tienda/producto-detalle/${p.code}`}
                                                 >
                                                     Ver descripción <Eye className="me-2" />

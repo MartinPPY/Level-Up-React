@@ -4,11 +4,11 @@ import { useToast } from "../../../context/ToastContext";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import { getAllCategories } from "../../../services/category.service";
-import { getAllProducts, getProductByCode } from "../../../services/product.service";
+import { getProductByCode } from "../../../services/product.service";
 import { Eye, ShoppingCartIcon } from "lucide-react";
 
 export const ProductoView = ({ productos }) => {
-    const { setCart,cart } = useCart();
+    const { setCart, cart } = useCart();
     const { showToast } = useToast();
     const { authenticated } = useAuth()
     const navigate = useNavigate()
@@ -143,18 +143,17 @@ export const ProductoView = ({ productos }) => {
 
                                     <div className="d-grid gap-2">
                                         <button
-                                            className="btn btn-info"
+                                            className="btn btn-primary"
                                             onClick={() => addToCart(prod.code)}
                                         >
-                                            <i className="bi bi-cart-plus me-2"></i>
                                             Agregar al carrito <ShoppingCartIcon className="me-2" />
                                         </button>
 
                                         <Link
-                                            className="btn btn-outline-success btn-sm"
+                                            className="btn btn-outline-secondary btn-sm"
                                             to={`/tienda/producto-detalle/${prod.code}`}
                                         >
-                                            Ver descripción <Eye className="me-2"/>
+                                            Ver descripción <Eye className="me-2" />
                                         </Link>
                                     </div>
                                 </div>

@@ -21,7 +21,6 @@ export const AdminGuard = () => {
     getIsAdmin()
   }, [])
 
-  // ⏳ Mientras carga, no renderiza nada (o un spinner)
   if (loading) return null
 
   return admin ? <Outlet /> : <Navigate to="/forbidden" replace />

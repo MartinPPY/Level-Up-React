@@ -17,10 +17,10 @@ export const Hero = () => {
                     </p>
 
                     <div className="d-flex justify-content-center justify-content-lg-start gap-3">
-                        <Link to="/tienda/productos" className="btn btn-lg btn-outline-info   fw-bold">
+                        <Link to="/tienda/productos" className="btn btn-lg btn-outline-primary   fw-bold">
                             Ver productos
                         </Link>
-                        <Link to="/tienda/contacto" className="btn btn-lg btn-success fw-bold">
+                        <Link to="/tienda/contacto" className="btn btn-lg btn-secondary fw-bold">
                             Contáctanos
                         </Link>
                     </div>

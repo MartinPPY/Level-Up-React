@@ -156,7 +156,7 @@ export const TiendaUserForm = () => {
                 )
             }
 
-            <button type="submit" className="btn btn-info" disabled={loading}>
+            <button type="submit" className="btn btn-primary" disabled={loading}>
                 {loading ? "Registrando..." : "Registrar Usuario"}
             </button>
         </form>

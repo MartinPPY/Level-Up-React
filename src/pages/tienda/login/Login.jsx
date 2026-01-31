@@ -1,41 +1,39 @@
 import { useState } from "react";
-import { validateForm } from "./validaciones";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../../services/auth.service";
 import { useAuth } from "../../../context/AuthContext";
-import { LucideMessageCircleWarning } from "lucide-react";
+import { Eye, EyeClosed, LucideMessageCircleWarning } from "lucide-react";
+import { useForm } from "react-hook-form";
+import {Spinner} from "react-bootstrap"
 
 export const Login = () => {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({});
     const [loading,setLoading] = useState(false)
     const {setAuthenticated} = useAuth()
+    const [showPassword,setShowPassword] = useState(false)
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting, isValid },
+        setValue,
+        reset
+    } = useForm({
+        email: "",
+        password: ""
+    })
+
     const navigate = useNavigate()
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const onSubmit = async (data) => {
 
         setLoading(true)
-        const errors = validateForm(email, password);
-
-        if (Object.keys(errors).length > 0) {
-            setErrors(errors);
-            Swal.fire({
-                title: "Error",
-                text: "Por favor, complete todos los campos correctamente",
-                icon: "error"
-            })
-            return;
-        }
 
         try {
-            const data  = await login(email,password)            
-            localStorage.setItem("token",data.token)
+            const response  = await login(data.email,data.password)
+            localStorage.setItem("token",response.token)
             setAuthenticated(true)
-            if(data.roles[0].authority === "ROLE_ADMIN" || data.roles[0].authority === "ROLE_VENDEDOR"){
+            if(response.roles[0].authority === "ROLE_ADMIN" || response.roles[0].authority === "ROLE_VENDEDOR"){
                 navigate("/admin")
             }else{
                 navigate("/tienda")
@@ -60,35 +58,53 @@ export const Login = () => {
                 <div className="col-lg-6">
                     <h2 className="text-center">Inicio de sesión</h2>
                     <p className="text-center">Ingresa tus datos para iniciar sesión</p>
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="mb-3">
                             <label htmlFor="email" className="form-label">Correo electrónico</label>
-                            <input type="email" className="form-control" id="email" placeholder="Johndoe@gmail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                            <input 
+                                type="email" 
+                                className="form-control" 
+                                id="email" 
+                                {...register("email",{
+                                    setValueAs: (value) => value.trim(),
+                                    required: "El correo es obligatorio"
+                                })}
+                            />
+                            {errors.email && <p className="text-danger mt-2">{errors.email.message}</p>}
                         </div>
-                        <div className="mb-3">
+                        <div className="mb-3 position-relative">
                             <label htmlFor="password" className="form-label">Contraseña</label>
-                            <input type="password" className="form-control" id="password" placeholder="********" value={password} onChange={(e) => setPassword(e.target.value)} />
+                            <input 
+                                type={showPassword ? "text" : "password"} 
+                                className="form-control pe-5" 
+                                id="password"  
+                                {...register("password",{
+                                    setValueAs: (value) => value.trim(),
+                                    required: "La contraseña es obligatoria"
+                                })}
+                            />
+                            <button 
+                                type="button"  
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="btn btn-link position-absolute password-eye">{showPassword ? <EyeClosed/> : <Eye/>} </button>
+                            {errors.password && <p className="text-danger mt-2">{errors.password.message}</p>}
                         </div>
 
-                        {
-                            errors && Object.keys(errors).length > 0 && (
-                                <div className="alert alert-danger">
-                                    <ul>
-                                        {Object.values(errors).map((error, index) => (
-                                            <li key={index}>{error}</li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )
-                        }
-
-                        <div className="bg-warning p-2 mb-3 rounded">
+                        <div className="bg-info p-2 mb-3 rounded">
                             <h4 className="text-dark"><LucideMessageCircleWarning/> Datos de prueba</h4>
-                            <p className="text-dark">Usuario: <strong>admin@gmail.com</strong></p>
-                            <p className="text-dark">Contraseña: <strong>admin</strong></p>
+                            <p className="text-dark">Usuario: <strong>admin@gmail.com - vendedor@gmail.com</strong></p>
+                            <p className="text-dark">Contraseña: <strong>admin - vendedor</strong></p>
                         </div>
 
-                        <button type="submit" className="btn btn-info w-100" disabled={loading}>{loading ? "Cargando..." : "Iniciar sesión"}</button>
+                        <button 
+                            type="submit" 
+                            className="btn btn-primary w-100 d-flex gap-2 justify-content-center align-items-center" 
+                            disabled={loading}>
+                                {loading ? <>
+                                    <Spinner animation="border" size="sm"/>
+                                    cargando...
+                                </> : "Iniciar sesión"}
+                        </button>
                     </form>
                 </div>
             </div>
