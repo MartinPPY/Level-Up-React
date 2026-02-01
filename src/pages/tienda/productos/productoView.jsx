@@ -88,7 +88,7 @@ export const ProductoView = ({ productos }) => {
                 <div className="col-md-8 mb-2">
                     <input
                         type="text"
-                        className="form-control bg-dark text-white border-secondary tienda-registro-placeholder"
+                        className="form-control"
                         placeholder="Buscar productos..."
                         value={busqueda}
                         onChange={(e) => setBusqueda(e.target.value)}
